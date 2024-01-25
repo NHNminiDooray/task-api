@@ -10,11 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -38,6 +40,15 @@ public class Task {
     @Column(name = "task_write_member_id")
     private String taskWriteMemberId;
 
+
     @OneToMany(mappedBy = "task")
     private List<TaskTag> taskTagList;
+
+    public Task(Long taskId, Project project, String taskTitle, String taskContent, String taskWriteMemberId) {
+        this.taskId = taskId;
+        this.project = project;
+        this.taskTitle = taskTitle;
+        this.taskContent = taskContent;
+        this.taskWriteMemberId = taskWriteMemberId;
+    }
 }

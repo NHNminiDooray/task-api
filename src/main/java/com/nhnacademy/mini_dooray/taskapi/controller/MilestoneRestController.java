@@ -5,7 +5,7 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.milestone.NotFoundMilestoneException;
-import com.nhnacademy.mini_dooray.taskapi.service.TaskService;
+import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneServiceImpl;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
