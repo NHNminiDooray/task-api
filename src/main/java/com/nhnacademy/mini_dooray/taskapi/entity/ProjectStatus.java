@@ -1,7 +1,13 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "project_status")
 public class ProjectStatus {
