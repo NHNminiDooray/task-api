@@ -20,9 +20,8 @@ import lombok.Setter;
 @Table(name = "project_member")
 public class ProjectMember {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_member_id")
-    private Long projectMemberId;
+    private String projectMemberId;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
