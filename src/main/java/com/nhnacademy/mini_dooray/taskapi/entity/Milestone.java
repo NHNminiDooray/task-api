@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "milestone")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Milestone {
@@ -24,7 +26,7 @@ public class Milestone {
 
     @ManyToOne
     @JoinColumn(name = "task_id")
-    private Task taskId;
+    private Task task;
 
     @Column(name = "milestone_name")
     private String milestoneName;
