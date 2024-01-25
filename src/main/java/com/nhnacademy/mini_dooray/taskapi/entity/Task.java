@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +37,7 @@ public class Task {
 
     @Column(name = "task_write_member_id")
     private String taskWriteMemberId;
+
+    @OneToMany(mappedBy = "task")
+    private List<TaskTag> taskTagList;
 }
