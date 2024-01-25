@@ -6,7 +6,7 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberException;
 import com.nhnacademy.mini_dooray.taskapi.service.ProjectMemberService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectServiceImpl;
-import com.nhnacademy.mini_dooray.taskapi.service.TaskService;
+import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
