@@ -1,10 +1,17 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "milestone")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Milestone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
