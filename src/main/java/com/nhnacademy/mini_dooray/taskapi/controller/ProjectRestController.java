@@ -13,8 +13,6 @@ import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +20,7 @@ import java.util.Objects;
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectRestController {
-    //    private final TaskService taskService;
+    //        private final TaskService taskService;
     private final ProjectService projectService;
 
     @GetMapping
@@ -45,11 +43,11 @@ public class ProjectRestController {
 
     // TODO: [Front]에서 ProjectMemberDto, ProjectMemberRequestDto 형식에 맞게 보내주어야 함
     @PostMapping
-    public ProjectRegisterResponseDto createProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
-        if(Objects.isNull(requestDto) || Objects.isNull(requestMembers)) {
+    public ProjectRegisterResponseDto createProject(@RequestBody ProjectRegisterRequestDto requestDto) {
+        if (Objects.isNull(requestDto)) {
             throw new RuntimeException("프로젝트 정보가 없습니다.");
         }
 
-        return this.projectService.saveProject(requestDto, requestMembers);
+        return this.projectService.saveProject(requestDto, requestDto.getRequestMembers());
     }
 }

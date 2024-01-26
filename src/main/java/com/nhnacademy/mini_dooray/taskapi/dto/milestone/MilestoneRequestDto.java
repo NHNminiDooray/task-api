@@ -1,9 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.dto.milestone;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class MilestoneRequestDto {
     private Long taskId;
     private String milestoneName;

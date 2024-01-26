@@ -9,21 +9,21 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "requestDto": {
-    "projectStatusId": 1,
-    "projectName": "프로젝트 이름"
-  },
+  "projectStatusId": 2,
+  "projectName": "프로젝트 이름",
   "requestMembers": [
     {
-      "projectMemberId": "멤버1",
-      "projectRole": "역할1"
+      "projectMemberId": "id1",
+      "projectRole": "role1"
     },
     {
-      "projectMemberId": "멤버2",
-      "projectRole": "역할2"
+      "projectMemberId": "id2",
+      "projectRole": "role2"
     }
   ]
 }
+
+
 
 
 
