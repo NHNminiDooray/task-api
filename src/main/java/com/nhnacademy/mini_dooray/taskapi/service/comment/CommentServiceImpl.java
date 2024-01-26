@@ -2,15 +2,16 @@ package com.nhnacademy.mini_dooray.taskapi.service.comment;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundTaskException;
+import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.repository.CommentRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,6 @@ public class CommentServiceImpl implements CommentService{
         return this.commentRepository.existsById(commentId);
     }
 
-    @Override
-    public List<Comment> getCommentsByTaskId(Long taskId) {
-        return this.commentRepository.findAllByTask_TaskId(taskId);
-    }
 
     @Override
     public Comment saveComment(Long taskId, CommentRegisterRequestDto requestDto) {
@@ -59,5 +56,15 @@ public class CommentServiceImpl implements CommentService{
         }
 
         this.commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public List<CommentResponseDto> getCommentsByTaskId(Long taskId) {
+        List<Comment> comments = commentRepository.findAllByTaskTaskId(taskId);
+        return comments.stream()
+                .map(comment -> new CommentResponseDto(comment.getCommentId(),
+                        comment.getCommentWriterMemberId(),
+                        comment.getCommentContent()))
+                .collect(Collectors.toList());
     }
 }

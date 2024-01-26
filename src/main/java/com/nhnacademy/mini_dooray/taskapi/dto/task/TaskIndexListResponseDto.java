@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequestDto {
-    private Long projectId;
+public class TaskIndexListResponseDto {
+    private Long taskId;
     private String taskTitle;
-    private String taskContent;
-    private String taskWriteMemberId;
 }

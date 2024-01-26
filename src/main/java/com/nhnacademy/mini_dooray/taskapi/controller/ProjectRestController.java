@@ -6,7 +6,6 @@ import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberReques
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberException;
-import com.nhnacademy.mini_dooray.taskapi.service.ProjectMemberService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.Objects;
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectRestController {
-//    private final TaskService taskService;
+    //    private final TaskService taskService;
     private final ProjectService projectService;
 
     @GetMapping
@@ -50,6 +49,6 @@ public class ProjectRestController {
             throw new RuntimeException("프로젝트 정보가 없습니다.");
         }
 
-         return this.projectService.saveProject(requestDto, requestMembers);
+        return this.projectService.saveProject(requestDto, requestMembers);
     }
 }
