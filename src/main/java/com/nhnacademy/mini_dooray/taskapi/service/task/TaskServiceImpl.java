@@ -80,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
         return new TaskDetailResponseDto(task.getTaskId(), task.getTaskTitle(),
                 task.getTaskContent(), task.getTaskWriteMemberId()
                 , taskTagService.getTagResponseDtosByTaskId(taskId)
-                , milestoneService.getMilestonesByTaskId(taskId)
+                , milestoneService.getMilestoneByTaskId(taskId)
                 , commentService.getCommentsByTaskId(taskId)
         );
     }

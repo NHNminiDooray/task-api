@@ -13,7 +13,6 @@ import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
@@ -87,24 +86,22 @@ public class MilestoneServiceImpl implements MilestoneService {
             }
         });
 
+    public void deleteMilestone(Long milestoneId) {
         this.milestoneRepository.deleteById(milestoneId);
     }
 
 
     @Override
-    public List<MileStoneResponseDto> getMilestonesByTaskId(Long taskId) {
-        List<Milestone> milestones = milestoneRepository.findAllByTaskTaskId(taskId);
-        return milestones.stream()
-                .map(milestone -> new MileStoneResponseDto(milestone.getStartPeriod(),
-                        milestone.getEndPeriod()))
-                .collect(Collectors.toList());
+    public MileStoneResponseDto getMilestoneByTaskId(Long taskId) {
+        Milestone milestone = milestoneRepository.findById(taskId).orElseThrow(()-> new NotFoundMilestoneException("milestone을 찾을 수 없습니다"));
+        return new MileStoneResponseDto(milestone.getStartPeriod(), milestone.getEndPeriod());
     }
 
     @Override
     public List<MileStoneIndexListResponseDto> getMileStonesListByProjectId(Long projectId) {
         List<Milestone> milestones = milestoneRepository.findAllByProject_ProjectId(projectId);
         return milestones.stream()
-                .map(milestone -> new MileStoneIndexListResponseDto(milestone.getMilestoneId(), milestone.getMilestoneName(), milestone.getStartPeriod(),
+                .map(milestone -> new MileStoneIndexListResponseDto(milestone.getMilestoneId(), milestone.getMilestoneName(),milestone.getStartPeriod(),
                         milestone.getEndPeriod()))
                 .collect(Collectors.toList());
     }
