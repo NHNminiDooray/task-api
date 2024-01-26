@@ -1,11 +1,13 @@
 package com.nhnacademy.mini_dooray.taskapi.service.tag;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagIndexRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
 import java.util.List;
 
 public interface TagService {
-    List<TagRequestDto> getTagsByprojectId(Long projectId);
+    List<TagIndexRequestDto> getTagListByProjectId(Long projectId);
+    List<TagRequestDto> getTagsByProjectId(Long projectId);
 
     TagRequestDto getTagByTagId(Long tagId);
 

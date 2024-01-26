@@ -1,4 +1,5 @@
-package com.nhnacademy.mini_dooray.taskapi.dto.task;
+package com.nhnacademy.mini_dooray.taskapi.dto.tag;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskIndexListResponseDto {
-    private Long taskId;
-    private String taskTitle;
-
+public class TagIndexRequestDto {
+    private Long tagId;
+    private String tagName;
 }
