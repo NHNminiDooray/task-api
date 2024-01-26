@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.service.tag;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagIndexRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
@@ -19,7 +20,15 @@ public class TagServiceImpl implements TagService {
     private final ProjectRepository projectRepository;
 
     @Override
-    public List<TagRequestDto> getTagsByprojectId(Long projectId) {
+    public List<TagIndexRequestDto> getTagListByProjectId(Long projectId) {
+        List<Tag> tags = tagRepository.findAllByProjectId(projectId);
+        return tags.stream()
+                .map(tag -> new TagIndexRequestDto(tag.getTagId(), tag.getTagName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TagRequestDto> getTagsByProjectId(Long projectId) {
         List<Tag> tags = tagRepository.findAllByProjectId(projectId);
         return tags.stream()
                 .map(tag -> new TagRequestDto(tag.getTagName()))
@@ -64,5 +73,6 @@ public class TagServiceImpl implements TagService {
     public boolean checkProjectId(Long projectId, Long tagId) {
         return (tagRepository.getById(tagId).getProject().getProjectId() == projectId) ? true : false;
     }
+
 }
 

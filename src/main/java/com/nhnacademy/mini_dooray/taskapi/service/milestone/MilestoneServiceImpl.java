@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.service.milestone;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
@@ -44,6 +45,15 @@ public class MilestoneServiceImpl implements MilestoneService {
         List<Milestone> milestones = milestoneRepository.findAllByTaskTaskId(taskId);
         return milestones.stream()
                 .map(milestone -> new MileStoneResponseDto(milestone.getStartPeriod(),
+                        milestone.getEndPeriod()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MileStoneIndexListResponseDto> getMileStonesListByProjectId(Long projectId) {
+        List<Milestone> milestones = milestoneRepository.findAllByProject_ProjectId(projectId);
+        return milestones.stream()
+                .map(milestone -> new MileStoneIndexListResponseDto(milestone.getMilestoneId(), milestone.getMilestoneName(),milestone.getStartPeriod(),
                         milestone.getEndPeriod()))
                 .collect(Collectors.toList());
     }
