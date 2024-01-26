@@ -1,0 +1,46 @@
+GET /projects/1/tags
+Host: localhost:9090
+Content-Type: application/json
+
+###
+POST /projects/1/tags
+Host: localhost:9090
+Content-Type: application/json
+{
+  "tagName" : "TagTest8"
+}
+
+
+###
+PUT /projects/1/tags/9
+Host: localhost:9090
+Content-Type: application/json
+{
+  "tagName" : "Tag9"
+}
+
+###
+DELETE /projects/1/tags/8
+Host: localhost:9090
+Content-Type: application/json
+
+
+
+
+
+
+
+
+###
+GET /projects/1/tasks/1/tags
+Host: localhost:9090
+Content-Type: application/json
+
+###
+POST /projects/1/task/1/tags
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "tagName" : "TagNo2"
+}
