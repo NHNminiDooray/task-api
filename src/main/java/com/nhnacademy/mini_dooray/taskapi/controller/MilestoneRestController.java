@@ -1,10 +1,12 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MilestoneRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.milestone.NotFoundMilestoneException;
+import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
@@ -23,14 +25,14 @@ public class MilestoneRestController {
     private final TaskService taskService;
 
     @GetMapping
-    public List<Milestone> getMilestones(@PathVariable("projectId") Long projectId) {
+    public List<MileStoneDomainResponseDto> getMilestones(@PathVariable("projectId") Long projectId) {
         return this.milestoneService.getMilestonesByProjectId(projectId);
     }
 
     @GetMapping("/task/{taskId}")
-    public Milestone getMilestone(@PathVariable("projectId") Long projectId,
+    public MileStoneDomainResponseDto getMilestone(@PathVariable("projectId") Long projectId,
                                   @PathVariable("taskId") Long taskId) {
-        Milestone milestone = this.milestoneService.getMilestoneByProjectIdAndTaskId(projectId, taskId);
+        MileStoneDomainResponseDto milestone = this.milestoneService.getMilestoneByProjectIdAndTaskId(projectId, taskId);
 
         // TODO: Front에서 확인하고, 없어도 에러를 무시하도록 설정해야함.
         //  또는 Optional로 반환을 해주면 프론트에서 처리할 것. 물어보기
@@ -42,8 +44,8 @@ public class MilestoneRestController {
     }
 
     @PostMapping
-    public Milestone createMilestone(@PathVariable("projectId") Long projectId,
-                                     MilestoneRequestDto milestoneRequest) {
+    public MileStoneDomainResponseDto createMilestone(@PathVariable("projectId") Long projectId,
+                                     @RequestBody MilestoneRequestDto milestoneRequest) {
         if (Objects.isNull(milestoneRequest)) {
             throw new NotFoundMilestoneException("마일스톤 정보가 없습니다.");
         }
@@ -58,15 +60,14 @@ public class MilestoneRestController {
     }
 
     @PutMapping("/{milestoneId}")
-    public Milestone updateMilestone(@PathVariable("projectId") Long projectId,
+    public MileStoneDomainResponseDto updateMilestone(@PathVariable("projectId") Long projectId,
                                      @PathVariable("milestoneId") Long milestoneId,
-                                     MilestoneRequestDto milestoneRequest) {
-        Task task = this.taskService.getTask(milestoneRequest.getTaskId());
-        Project project = this.projectService.getProject(projectId);
+                                     @RequestBody MilestoneRequestDto milestoneRequest) {
+        if (!this.projectService.isExist(projectId)) {
+            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
+        }
 
-        return this.milestoneService.updateMilestone(
-                new Milestone(milestoneId, project, task, milestoneRequest.getMilestoneName(),
-                    milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
+        return this.milestoneService.updateMilestone(milestoneRequest, milestoneId);
     }
 
     @DeleteMapping("/{milestoneId}")
@@ -79,6 +80,6 @@ public class MilestoneRestController {
             throw new NotFoundMilestoneException("마일스톤이 존재하지 않습니다.");
         }
 
-        this.milestoneService.deleteMilestone(milestoneId);
+        this.milestoneService.deleteMilestone(projectId, milestoneId);
     }
 }

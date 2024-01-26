@@ -12,5 +12,4 @@ import lombok.Setter;
 public class TaskIndexListResponseDto {
     private Long taskId;
     private String taskTitle;
-
 }

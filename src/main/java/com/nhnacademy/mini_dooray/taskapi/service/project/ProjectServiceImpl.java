@@ -34,7 +34,6 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectStatus projectStatus = this.projectStatusRepository.findById(requestDto.getProjectStatusId())
                 .orElseThrow(() -> new NotFoundProjectStatusException("프로젝트 상태가 존재하지 않습니다."));
 
-
         Project project = new Project();
         project.setProjectStatus(projectStatus);
         project.setProjectName(requestDto.getProjectName());

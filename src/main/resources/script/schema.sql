@@ -12,7 +12,7 @@ ALTER TABLE project_member
 DROP TABLE IF EXISTS `project`;
 
 CREATE TABLE `project` (
-                           `project_id`	BIGINT	NOT NULL PRIMARY KEY,
+                           `project_id`	BIGINT	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                            `project_status_id`	BIGINT	NOT NULL,
                            `project_name`	VARCHAR(20)	NULL
 );
@@ -20,7 +20,7 @@ CREATE TABLE `project` (
 DROP TABLE IF EXISTS `project_status`;
 
 CREATE TABLE `project_status` (
-                                  `project_status_id`	BIGINT	NOT NULL PRIMARY KEY,
+                                  `project_status_id`	BIGINT	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                   `project_status_name`	VARCHAR(20)	NULL
 );
 
@@ -108,3 +108,20 @@ ALTER TABLE `project_member` ADD CONSTRAINT `FK_project_TO_project_member_1` FOR
     REFERENCES `project` (
                           `project_id`
         );
+
+
+
+
+###
+INSERT INTO project_status(project_status_name)
+VALUES ('시작');
+INSERT INTO project_status(project_status_name)
+VALUES ('진행중');
+INSERT INTO project_status(project_status_name)
+VALUES ('완료');
+
+INSERT INTO task(project_id, task_title, task_content, task_write_member_id)
+VALUES (1, 'task1', 'task1 내용', 'user1');
+
+INSERT INTO milestone(project_id, task_id, milestone_name, start_period, end_period)
+VALUES (1, 1, '마일스톤1', '2020-01-01', '2020-01-31');

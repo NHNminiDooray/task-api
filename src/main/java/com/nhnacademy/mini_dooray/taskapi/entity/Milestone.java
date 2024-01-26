@@ -1,9 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Milestone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
