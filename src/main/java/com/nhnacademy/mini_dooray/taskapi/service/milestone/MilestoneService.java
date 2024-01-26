@@ -10,13 +10,13 @@ public interface MilestoneService {
     List<Milestone> getMilestonesByProjectId(Long projectId);
     Milestone getMilestoneByProjectIdAndTaskId(Long projectId, Long taskId);
 
+    MileStoneResponseDto getMilestoneByTaskId(Long taskId);
+
     Milestone saveMilestone(Milestone milestone);
 
     Milestone updateMilestone(Milestone milestone);
 
     void deleteMilestone(Long milestoneId);
-
-    List<MileStoneResponseDto> getMilestonesByTaskId(Long taskId);
 
     List<MileStoneIndexListResponseDto> getMileStonesListByProjectId(Long projectId);
 
