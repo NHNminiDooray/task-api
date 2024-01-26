@@ -45,7 +45,7 @@ public class MilestoneRestController {
     public Milestone createMilestone(@PathVariable("projectId") Long projectId,
                                      MilestoneRequestDto milestoneRequest) {
         if (Objects.isNull(milestoneRequest)) {
-            throw new RuntimeException("마일스톤 정보가 없습니다.");
+            throw new NotFoundMilestoneException("마일스톤 정보가 없습니다.");
         }
 
         Project project = this.projectService.getProject(projectId);
@@ -72,6 +72,13 @@ public class MilestoneRestController {
     @DeleteMapping("/{milestoneId}")
     public void deleteMilestone(@PathVariable("projectId") Long projectId,
                                 @PathVariable("milestoneId") Long milestoneId) {
+        if (!this.projectService.isExist(projectId)) {
+            throw new NotFoundMilestoneException("프로젝트가 존재하지 않습니다.");
+        }
+        if (!this.milestoneService.isExist(milestoneId)) {
+            throw new NotFoundMilestoneException("마일스톤이 존재하지 않습니다.");
+        }
+
         this.milestoneService.deleteMilestone(milestoneId);
     }
 }

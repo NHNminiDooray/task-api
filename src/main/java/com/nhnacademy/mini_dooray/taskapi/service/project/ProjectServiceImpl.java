@@ -24,6 +24,12 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectStatusRepository projectStatusRepository;
 
+    @Override
+    public boolean isExist(Long projectId) {
+        return this.projectRepository.exists(projectId);
+    }
+
+    @Override
     public Project saveProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
         ProjectStatus projectStatus = this.projectStatusRepository.findById(requestDto.getProjectStatusId())
                 .orElseThrow(() -> new NotFoundProjectStatusException("프로젝트 상태가 존재하지 않습니다."));
@@ -43,6 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
         return savedProject;
     }
 
+    @Override
     public Project getProject(Long projectId) {
         return this.projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException("프로젝트가 존재하지 않습니다."));

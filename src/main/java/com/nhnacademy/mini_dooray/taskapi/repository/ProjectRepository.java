@@ -12,4 +12,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select p from Project p join ProjectMember pm ON p.projectId = pm.project.projectId where pm.pk.projectMemberId = ?1")
     List<ProjectIndexListResponseDto> findProjectsIndexListByMemberId(String projectMemberId);
     Project save(Project project);
+    boolean exists(Long projectId);
 }

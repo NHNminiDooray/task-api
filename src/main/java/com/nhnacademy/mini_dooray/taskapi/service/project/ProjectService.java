@@ -9,7 +9,8 @@ import com.nhnacademy.mini_dooray.taskapi.entity.ProjectMember;
 import java.util.List;
 
 public interface ProjectService {
-    public Project saveProject(ProjectRegisterRequestDto project, List<ProjectMemberRequestDto> requestMembers);
-    public Project getProject(Long projectId);
-    public List<ProjectIndexListResponseDto> getProjectIndexListsByMemberId(String projectMemberId);
+    boolean isExist(Long projectId);
+    Project saveProject(ProjectRegisterRequestDto project, List<ProjectMemberRequestDto> requestMembers);
+    Project getProject(Long projectId);
+    List<ProjectIndexListResponseDto> getProjectIndexListsByMemberId(String projectMemberId);
 }

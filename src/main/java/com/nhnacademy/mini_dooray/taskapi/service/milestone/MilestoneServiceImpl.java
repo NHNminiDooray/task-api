@@ -12,6 +12,11 @@ import java.util.List;
 public class MilestoneServiceImpl implements MilestoneService{
     private final MilestoneRepository milestoneRepository;
 
+    @Override
+    public boolean isExist(Long milestoneId) {
+        this.milestoneRepository.existsById(milestoneId);
+    }
+
     public List<Milestone> getMilestonesByProjectId(Long projectId) {
         return this.milestoneRepository.findAllByProject_ProjectId(projectId);
     }
