@@ -34,4 +34,10 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag")
     private List<TaskTag> taskTagList;
+
+    public Tag(Long tagId, Project project, String tagName) {
+        this.tagId = tagId;
+        this.project = project;
+        this.tagName = tagName;
+    }
 }

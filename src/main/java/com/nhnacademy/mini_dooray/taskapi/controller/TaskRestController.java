@@ -1,10 +1,9 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskDetailResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundTaskException;
-import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import java.util.List;
 import java.util.Objects;
@@ -22,22 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/projects/{projectId}/tasks")
 public class TaskRestController {
     private final TaskService taskService;
-    private final ProjectService projectService;
-
 
     @GetMapping
-    public List<Task> getTasks(@PathVariable("projectId") Long projectId) {
+    public List<TaskIndexListResponseDto> getTasks(@PathVariable("projectId") Long projectId) {
         return taskService.getTasksByProjectId(projectId);
     }
 
     @GetMapping("/{taskId}")
-    public Task getTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId) {
-        Task task = taskService.getTaskByProjectIdAndTaskId(projectId, taskId);
-
-        if (Objects.isNull(task)) {
-            throw new NotFoundTaskException("Task을 찾을 수 없습니다");
-        }
-        return task;
+    public TaskDetailResponseDto getTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId) {
+        return taskService.getTaskByProjectIdAndTaskId(projectId, taskId);
     }
 
     @PostMapping
@@ -45,26 +37,19 @@ public class TaskRestController {
         if (Objects.isNull(taskRequest)) {
             throw new RuntimeException("Task 정보가 없습니다.");
         }
-        Project project = projectService.getProject(projectId);
-
-        Task newTask = new Task(null, project, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
-                taskRequest.getTaskWriteMemberId());
-        return taskService.saveTask(newTask);
+        return taskService.saveTask(projectId, taskRequest);
     }
 
     @PutMapping("/{taskId}")
     public Task updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
                            TaskRequestDto taskRequest) {
-        Task task = taskService.getTask(taskId);
-        task.setTaskTitle(taskRequest.getTaskTitle());
-        task.setTaskContent(taskRequest.getTaskContent());
-        task.setTaskWriteMemberId(taskRequest.getTaskWriteMemberId());
-        return taskService.updateTask(task);
+        return taskService.updateTask(projectId, taskId, taskRequest);
     }
 
 
     @DeleteMapping("/{taskId}")
     public void deleteTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId) {
-        taskService.deleteTask(taskId);
+
+        taskService.deleteTask(projectId,taskId);
     }
 }

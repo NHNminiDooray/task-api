@@ -1,15 +1,16 @@
 package com.nhnacademy.mini_dooray.taskapi.service.milestone;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class MilestoneServiceImpl implements MilestoneService{
+public class MilestoneServiceImpl implements MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     @Override
@@ -35,5 +36,15 @@ public class MilestoneServiceImpl implements MilestoneService{
 
     public void deleteMilestone(Long milestoneId) {
         this.milestoneRepository.deleteById(milestoneId);
+    }
+
+
+    @Override
+    public List<MileStoneResponseDto> getMilestonesByTaskId(Long taskId) {
+        List<Milestone> milestones = milestoneRepository.findAllByTaskTaskId(taskId);
+        return milestones.stream()
+                .map(milestone -> new MileStoneResponseDto(milestone.getStartPeriod(),
+                        milestone.getEndPeriod()))
+                .collect(Collectors.toList());
     }
 }

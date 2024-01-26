@@ -3,14 +3,18 @@ package com.nhnacademy.mini_dooray.taskapi.controller;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
-import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundTaskException;
+import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,16 +22,6 @@ import java.util.List;
 public class CommentRestController {
     private final ProjectService projectService;
     private final CommentService commentService;
-
-    @GetMapping
-    public List<Comment> getComments(@PathVariable("projectId") Long projectId,
-                                     @PathVariable("taskId") Long taskId) {
-        if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
-        }
-
-        return this.commentService.getCommentsByTaskId(taskId);
-    }
 
     @PostMapping
     public Comment createComment(@PathVariable("projectId") Long projectId,

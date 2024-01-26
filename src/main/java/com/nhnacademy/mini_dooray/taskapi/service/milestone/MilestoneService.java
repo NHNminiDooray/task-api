@@ -1,7 +1,7 @@
 package com.nhnacademy.mini_dooray.taskapi.service.milestone;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
-
 import java.util.List;
 
 public interface MilestoneService {
@@ -14,4 +14,7 @@ public interface MilestoneService {
     Milestone updateMilestone(Milestone milestone);
 
     void deleteMilestone(Long milestoneId);
+
+    List<MileStoneResponseDto> getMilestonesByTaskId(Long taskId);
+
 }
