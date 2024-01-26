@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByTask_TaskId(Long taskId);
+
+    List<Comment> findAllByTaskTaskId(Long taskId);
+
 }

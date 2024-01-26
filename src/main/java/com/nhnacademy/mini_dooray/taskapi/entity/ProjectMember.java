@@ -49,4 +49,11 @@ public class ProjectMember {
         @Column(name = "project_member_id")
         private String projectMemberId;
     }
+
+    public ProjectMember(Project project, String projectMemberId, String projectRole) {
+        this.project = project;
+        this.pk = new Pk(project.getProjectId(), projectMemberId);
+        this.projectRole = projectRole;
+    }
+
 }
