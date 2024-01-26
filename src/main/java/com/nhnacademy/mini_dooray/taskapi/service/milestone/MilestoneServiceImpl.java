@@ -86,10 +86,8 @@ public class MilestoneServiceImpl implements MilestoneService {
             }
         });
 
-    public void deleteMilestone(Long milestoneId) {
         this.milestoneRepository.deleteById(milestoneId);
     }
-
 
     @Override
     public MileStoneResponseDto getMilestoneByTaskId(Long taskId) {

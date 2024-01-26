@@ -16,12 +16,12 @@ Content-Type: application/json
 
  {
     "commentCreatedAt": "0001-01-01T12:34:56",
-    "commentWriterMemberId": "changed writer member id",
-    "commentContent": "changed content!"
+    "commentWriterMemberId": "changed writer member id~~~",
+    "commentContent": "changed content!~!~!"
  }
 
 ### Comment 번호 잘 보고 삭제
 
-DELETE /projects/1/tasks/1/comments/4
+DELETE /projects/1/tasks/1/comments/5
 Host: localhost:9090
 Content-Type: application/json
