@@ -22,7 +22,7 @@ public class TagController {
 
     @GetMapping
     public List<TagRequestDto> getTags(@PathVariable("projectId") Long projectId) {
-        return tagService.getTagsByprojectId(projectId);
+        return tagService.getTagsByProjectId(projectId);
     }
 
     @GetMapping("/{tagId}")
