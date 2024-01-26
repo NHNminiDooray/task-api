@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "comment")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Comment {

@@ -1,5 +1,7 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
@@ -14,52 +16,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectRestController {
-    private final ProjectMemberService projectMemberService;
-    private final TaskService taskService;
+//    private final TaskService taskService;
     private final ProjectService projectService;
 
     @GetMapping
-    public List<Project> getProjects(HttpServletRequest request) {
+    public List<ProjectIndexListResponseDto> getProjectIndexLists(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
         if (Objects.isNull(session)) {
             throw new NotFoundMemberException("로그인이 필요합니다.");
         }
-        String memberId = (String) session.getAttribute("login_member_id");
-        // TODO [ProjectMemberService]에서 getProjectIdByMemberId 구현되어야 함. (MemberId로 등록된 모든 ProjectId를 가져옴)
-        List<Long> projectIds = projectMemberService.getProjectIdByMemberId(memberId);
+        String projectMemberId = (String) session.getAttribute("login_member_id");
 
-        List<Project> projects = projectIds.stream()
-                .map(projectId -> this.projectService.getProject(projectId))
-                .collect(Collectors.toList());
-        return projects;
+        List<ProjectIndexListResponseDto> responseDtos = this.projectService.getProjectIndexListsByMemberId(projectMemberId);
+        return responseDtos;
     }
 
-    @GetMapping("/{projectId}")
-    public List<Task> getTasks(@PathVariable Long projectId) {
-        return this.taskService.getTasksByProjectId(projectId);
-    }
+    // TODO: Task Service 완료되면 Dto에 맞게 반환해야함. / 필요 없을 것 같습니다. (그냥 전체를 뿌려주니까)
+//    @GetMapping("/{projectId}")
+//    public List<Task> getTasks(@PathVariable Long projectId) {
+//        return this.taskService.getTasksByProjectId(projectId);
+//    }
 
-    // TODO: [Front]에서 ProjectMemberDto 형식에 맞게 보내주어야 함
+    // TODO: [Front]에서 ProjectMemberDto, ProjectMemberRequestDto 형식에 맞게 보내주어야 함
     @PostMapping
-    public Project createProject(Project project, List<ProjectMemberRequestDto> requestMembers) {
-        if(Objects.isNull(project)) {
+    public Project createProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
+        if(Objects.isNull(requestDto) || Objects.isNull(requestMembers)) {
             throw new RuntimeException("프로젝트 정보가 없습니다.");
         }
 
-        Project savedProject = this.projectService.saveProject(project);
-
-        for (ProjectMemberRequestDto requestMember : requestMembers) {
-            // TODO: [ProjectMemberService]에서 saveMember가 구현되어야 함. (프로젝트를 등록할 때 멤버들도 같이 저장하기 때문에)
-            projectMemberService.saveMember(requestMember, savedProject.getProjectId());
-        }
-
-        return savedProject;
+         return this.projectService.saveProject(requestDto, requestMembers);
     }
 }
