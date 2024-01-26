@@ -67,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDetailResponseDto getTaskByProjectIdAndTaskId(Long projectId, Long taskId) {
-        Task task = taskRepository.findByProjectIdAndTaskId(projectId, taskId);
+        Task task = taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
         if (Objects.isNull(task)) {
             throw new NotFoundTaskException("Task를 찾을 수 없습니다");
         }

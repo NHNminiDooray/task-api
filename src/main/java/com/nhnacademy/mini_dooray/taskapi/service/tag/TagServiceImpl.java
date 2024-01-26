@@ -21,7 +21,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagIndexRequestDto> getTagListByProjectId(Long projectId) {
-        List<Tag> tags = tagRepository.findAllByProjectId(projectId);
+        List<Tag> tags = tagRepository.findAllByProject_ProjectId(projectId);
         return tags.stream()
                 .map(tag -> new TagIndexRequestDto(tag.getTagId(), tag.getTagName()))
                 .collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagRequestDto> getTagsByProjectId(Long projectId) {
-        List<Tag> tags = tagRepository.findAllByProjectId(projectId);
+        List<Tag> tags = tagRepository.findAllByProject_ProjectId(projectId);
         return tags.stream()
                 .map(tag -> new TagRequestDto(tag.getTagName()))
                 .collect(Collectors.toList());
