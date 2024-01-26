@@ -9,9 +9,9 @@ public interface TagService {
     List<TagIndexRequestDto> getTagListByProjectId(Long projectId);
     List<TagRequestDto> getTagsByProjectId(Long projectId);
 
-    TagRequestDto getTagByTagId(Long tagId);
+    List<TagRequestDto> getTagsByProejctIdAndTaskId(Long projectId, Long taskId);
 
-    Tag saveTag(Long projectId, TagRequestDto tagRequest);
+    Tag saveTag(Long projectId,  TagRequestDto tagRequest);
 
     Tag updateTag(Long projectId, Long tagId, TagRequestDto tagRequest);
 

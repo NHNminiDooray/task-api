@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class TaskRestController {
     }
 
     @PostMapping
-    public Task createTask(@PathVariable("projectId") Long projectId, TaskRequestDto taskRequest) {
+    public Task createTask(@PathVariable("projectId") Long projectId,@RequestBody TaskRequestDto taskRequest) {
         if (Objects.isNull(taskRequest)) {
             throw new RuntimeException("Task 정보가 없습니다.");
         }
@@ -42,7 +43,7 @@ public class TaskRestController {
 
     @PutMapping("/{taskId}")
     public Task updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
-                           TaskRequestDto taskRequest) {
+                           @RequestBody TaskRequestDto taskRequest) {
         return taskService.updateTask(projectId, taskId, taskRequest);
     }
 
