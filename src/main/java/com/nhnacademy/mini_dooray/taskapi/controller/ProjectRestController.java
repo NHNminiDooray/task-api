@@ -1,7 +1,9 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
@@ -24,15 +26,14 @@ public class ProjectRestController {
     private final ProjectService projectService;
 
     @GetMapping
-    public List<ProjectIndexListResponseDto> getProjectIndexLists(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+    public List<ProjectIndexListResponseDto> getProjectIndexLists(ProjectIndexListRequestDto requestDto) {
+        // TODO: Test시 Error 발생해서 임시로 넣어둠. (로그인이 필요한 기능)
 
-        if (Objects.isNull(session)) {
-            throw new NotFoundMemberException("로그인이 필요합니다.");
-        }
-        String projectMemberId = (String) session.getAttribute("login_member_id");
+//        if (Objects.isNull(requestDto)) {
+//            throw new NotFoundMemberException("로그인이 필요합니다.");
+//        }
+        List<ProjectIndexListResponseDto> responseDtos = this.projectService.getProjectIndexListsByMemberId(requestDto.getMemberName());
 
-        List<ProjectIndexListResponseDto> responseDtos = this.projectService.getProjectIndexListsByMemberId(projectMemberId);
         return responseDtos;
     }
 
@@ -44,7 +45,7 @@ public class ProjectRestController {
 
     // TODO: [Front]에서 ProjectMemberDto, ProjectMemberRequestDto 형식에 맞게 보내주어야 함
     @PostMapping
-    public Project createProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
+    public ProjectRegisterResponseDto createProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
         if(Objects.isNull(requestDto) || Objects.isNull(requestMembers)) {
             throw new RuntimeException("프로젝트 정보가 없습니다.");
         }

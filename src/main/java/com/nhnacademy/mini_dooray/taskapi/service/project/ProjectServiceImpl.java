@@ -2,6 +2,7 @@ package com.nhnacademy.mini_dooray.taskapi.service.project;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.ProjectMember;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
@@ -26,11 +26,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public boolean isExist(Long projectId) {
-        return this.projectRepository.exists(projectId);
+        return this.projectRepository.existsById(projectId);
     }
 
     @Override
-    public Project saveProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
+    public ProjectRegisterResponseDto saveProject(ProjectRegisterRequestDto requestDto, List<ProjectMemberRequestDto> requestMembers) {
         ProjectStatus projectStatus = this.projectStatusRepository.findById(requestDto.getProjectStatusId())
                 .orElseThrow(() -> new NotFoundProjectStatusException("프로젝트 상태가 존재하지 않습니다."));
 
@@ -46,7 +46,8 @@ public class ProjectServiceImpl implements ProjectService {
                     savedProject, member.getProjectRole()));
         }
 
-        return savedProject;
+        return new ProjectRegisterResponseDto(savedProject.getProjectId(),
+                savedProject.getProjectStatus().getProjectStatusId(), savedProject.getProjectName());
     }
 
     @Override
