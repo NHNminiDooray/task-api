@@ -9,6 +9,8 @@ import java.util.List;
 public interface TaskService {
     List<TaskIndexListResponseDto> getTasksByProjectId(Long projectId);
 
+    List<Task> getAllTasksByProjectId(Long projectId);
+
     TaskDetailResponseDto getTaskByProjectIdAndTaskId(Long projectId, Long taskId);
 
     Task getTask(Long taskId);

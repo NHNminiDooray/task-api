@@ -79,6 +79,6 @@ public class MilestoneRestController {
             throw new NotFoundMilestoneException("마일스톤이 존재하지 않습니다.");
         }
 
-        this.milestoneService.deleteMilestone(milestoneId);
+        this.milestoneService.deleteMilestone(projectId, milestoneId);
     }
 }

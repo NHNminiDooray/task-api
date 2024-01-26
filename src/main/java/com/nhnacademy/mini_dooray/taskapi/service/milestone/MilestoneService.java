@@ -14,7 +14,7 @@ public interface MilestoneService {
 
     Milestone updateMilestone(Milestone milestone);
 
-    void deleteMilestone(Long milestoneId);
+    void deleteMilestone(Long projectId, Long milestoneId);
 
     List<MileStoneResponseDto> getMilestonesByTaskId(Long taskId);
 
