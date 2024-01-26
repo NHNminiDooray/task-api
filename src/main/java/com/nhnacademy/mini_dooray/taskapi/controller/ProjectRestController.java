@@ -5,7 +5,7 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberException;
 import com.nhnacademy.mini_dooray.taskapi.service.ProjectMemberService;
-import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectServiceImpl;
+import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ProjectRestController {
     private final ProjectMemberService projectMemberService;
     private final TaskService taskService;
-    private final ProjectServiceImpl projectService;
+    private final ProjectService projectService;
 
     @GetMapping
     public List<Project> getProjects(HttpServletRequest request) {
@@ -43,7 +43,6 @@ public class ProjectRestController {
 
     @GetMapping("/{projectId}")
     public List<Task> getTasks(@PathVariable Long projectId) {
-        // TODO: [TaskService]에서 getTasksByProjectId가 구현되어야 함. (ProjectId로 등록된 모든 Task를 가져옴)
         return this.taskService.getTasksByProjectId(projectId);
     }
 

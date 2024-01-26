@@ -4,7 +4,7 @@ import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundTaskException;
-import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectServiceImpl;
+import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/projects/{projectId}/tasks")
 public class TaskRestController {
     private final TaskService taskService;
-    private final ProjectServiceImpl projectService;
+    private final ProjectService projectService;
 
 
     @GetMapping
