@@ -19,18 +19,18 @@ public class TaskDetailResponseDto {
     private String taskWriteMemberId;
 
     private List<TagResponseDto> tagList;
-    private List<MileStoneResponseDto> mileStoneList;
+    private MileStoneResponseDto mileStone;
     private List<CommentResponseDto> commentList;
 
     public TaskDetailResponseDto(Long taskId, String taskTitle, String taskContent, String taskWriteMemberId,
-                                 List<TagResponseDto> tagList, List<MileStoneResponseDto> mileStoneList,
+                                 List<TagResponseDto> tagList, MileStoneResponseDto mileStoneRequest,
                                  List<CommentResponseDto> commentList) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
         this.taskContent = taskContent;
         this.taskWriteMemberId = taskWriteMemberId;
         this.tagList = tagList;
-        this.mileStoneList = mileStoneList;
+        this.mileStone = mileStoneRequest;
         this.commentList = commentList;
     }
 }
