@@ -1,21 +1,25 @@
 package com.nhnacademy.mini_dooray.taskapi.service.comment;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
+import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundComment;
 import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.repository.CommentRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
 
@@ -26,27 +30,37 @@ public class CommentServiceImpl implements CommentService{
 
 
     @Override
-    public Comment saveComment(Long taskId, CommentRegisterRequestDto requestDto) {
+    public CommentDomainResponseDto saveComment(Long taskId, CommentRegisterRequestDto requestDto) {
         Task task = this.taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundTaskException("게시글이 존재하지 않습니다."));
 
-        return this.commentRepository.save(new Comment(
+        Comment savedComment = this.commentRepository.save(new Comment(
                 null, task, requestDto.getCommentCreatedAt(),
                 requestDto.getCommentWriterMemberId(), requestDto.getCommentContent()));
+        return new CommentDomainResponseDto(savedComment.getCommentId(), savedComment.getTask().getTaskId(),
+                savedComment.getCommentCreatedAt(), savedComment.getCommentWriterMemberId(), savedComment.getCommentContent());
     }
 
     @Override
-    public Comment updateComment(Long taskId, Long commentId, CommentModifyRequestDto requestDto) {
+    public CommentDomainResponseDto updateComment(Long taskId, Long commentId, CommentModifyRequestDto requestDto) {
         if (!this.commentRepository.existsById(commentId)) {
-            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
+            throw new NotFoundComment("댓글이 존재하지 않습니다.");
+        }
+        if (!this.taskRepository.existsById(taskId)) {
+            throw new NotFoundTaskException("게시글이 존재하지 않습니다.");
         }
 
-        Task task = this.taskRepository.findById(taskId)
-                .orElseThrow(() -> new NotFoundTaskException("게시글이 존재하지 않습니다."));
+        Comment savedComment = this.commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundComment("댓글이 존재하지 않습니다."));
 
-        return this.commentRepository.save(new Comment(
-                commentId, task, requestDto.getCommentCreatedAt(),
-                requestDto.getCommentWriterMemberId(), requestDto.getCommentContent()));
+        savedComment.setCommentCreatedAt(requestDto.getCommentCreatedAt());
+        savedComment.setCommentWriterMemberId(requestDto.getCommentWriterMemberId());
+        savedComment.setCommentContent(requestDto.getCommentContent());
+        Comment updatedComment = this.commentRepository.save(savedComment);
+
+        return new CommentDomainResponseDto(updatedComment.getCommentId(), updatedComment.getTask().getTaskId(),
+                updatedComment.getCommentCreatedAt(), updatedComment.getCommentWriterMemberId(),
+                updatedComment.getCommentContent());
     }
 
     @Override

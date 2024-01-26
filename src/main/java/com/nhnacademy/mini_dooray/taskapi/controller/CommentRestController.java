@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
@@ -24,9 +25,9 @@ public class CommentRestController {
     private final CommentService commentService;
 
     @PostMapping
-    public Comment createComment(@PathVariable("projectId") Long projectId,
-                                 @PathVariable("taskId") Long taskId,
-                                 @RequestBody CommentRegisterRequestDto requestDto) {
+    public CommentDomainResponseDto createComment(@PathVariable("projectId") Long projectId,
+                                                  @PathVariable("taskId") Long taskId,
+                                                  @RequestBody CommentRegisterRequestDto requestDto) {
         if (!this.projectService.isExist(projectId)) {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }
@@ -35,10 +36,11 @@ public class CommentRestController {
     }
 
     @PutMapping("/{commentId}")
-    public Comment updateComment(@PathVariable("projectId") Long projectId,
+    public CommentDomainResponseDto updateComment(@PathVariable("projectId") Long projectId,
                                  @PathVariable("taskId") Long taskId,
                                  @PathVariable("commentId") Long commentId,
                                  @RequestBody CommentModifyRequestDto requestDto) {
+        System.out.println("requestDto = " + requestDto);
         if (!this.projectService.isExist(projectId)) {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }

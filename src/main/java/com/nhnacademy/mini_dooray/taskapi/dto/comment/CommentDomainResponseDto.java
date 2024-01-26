@@ -1,6 +1,9 @@
 package com.nhnacademy.mini_dooray.taskapi.dto.comment;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -8,8 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-public class CommentModifyRequestDto {
+public class CommentDomainResponseDto {
+    private Long commentId;
+    private Long taskId;
     private LocalDateTime commentCreatedAt;
     private String commentWriterMemberId;
     private String commentContent;

@@ -4,10 +4,6 @@ import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListRequestDto
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
-import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Project;
-import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberException;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
