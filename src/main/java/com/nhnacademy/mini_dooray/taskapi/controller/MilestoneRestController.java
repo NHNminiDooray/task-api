@@ -70,7 +70,7 @@ public class MilestoneRestController {
     }
 
     @DeleteMapping("/{milestoneId}")
-    public void deleteMilestone(@PathVariable("projectId") Long ignore,
+    public void deleteMilestone(@PathVariable("projectId") Long projectId,
                                 @PathVariable("milestoneId") Long milestoneId) {
         this.milestoneService.deleteMilestone(milestoneId);
     }
