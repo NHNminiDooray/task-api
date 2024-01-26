@@ -14,7 +14,7 @@ public class MilestoneServiceImpl implements MilestoneService{
 
     @Override
     public boolean isExist(Long milestoneId) {
-        this.milestoneRepository.existsById(milestoneId);
+        return this.milestoneRepository.existsById(milestoneId);
     }
 
     public List<Milestone> getMilestonesByProjectId(Long projectId) {

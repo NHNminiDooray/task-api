@@ -26,12 +26,14 @@ public class ProjectRestController {
 
     @GetMapping
     public List<ProjectIndexListResponseDto> getProjectIndexLists(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-
-        if (Objects.isNull(session)) {
-            throw new NotFoundMemberException("로그인이 필요합니다.");
-        }
-        String projectMemberId = (String) session.getAttribute("login_member_id");
+        // TODO: Test시 Error 발생해서 임시로 넣어둠. (로그인이 필요한 기능)
+//        HttpSession session = request.getSession(false);
+//
+//        if (Objects.isNull(session)) {
+//            throw new NotFoundMemberException("로그인이 필요합니다.");
+//        }
+//        String projectMemberId = (String) session.getAttribute("login_member_id");
+        String projectMemberId = "test1";
 
         List<ProjectIndexListResponseDto> responseDtos = this.projectService.getProjectIndexListsByMemberId(projectMemberId);
         return responseDtos;

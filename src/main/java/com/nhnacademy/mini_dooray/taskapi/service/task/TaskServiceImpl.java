@@ -1,7 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.service.task;
 
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTaskByProjectIdAndTaskId(Long projectId, Long taskId) {
-        return taskRepository.findByProjectIdAndTaskId(projectId, taskId);
+        return taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
     }
 
     @Override

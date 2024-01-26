@@ -1,0 +1,38 @@
+GET /projects
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "requestDto": {
+    "projectStatusId": 1,
+    "projectName": "프로젝트 이름"
+  },
+  "requestMembers": [
+    {
+      "projectMemberId": "멤버1",
+      "projectRole": "역할1"
+    },
+    {
+      "projectMemberId": "멤버2",
+      "projectRole": "역할2"
+    }
+  ]
+}
+
+
+
+###
+
+PUT /projects/124
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "name": "name"
+}
