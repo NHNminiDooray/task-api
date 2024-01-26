@@ -5,9 +5,9 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
 import com.nhnacademy.mini_dooray.taskapi.exception.milestone.NotFoundMilestoneException;
+import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
+import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
-import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneServiceImpl;
-import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,8 @@ import java.util.Objects;
 @RequestMapping("/projects/{projectId}/milestones")
 @RequiredArgsConstructor
 public class MilestoneRestController {
-    private final MilestoneServiceImpl milestoneService;
-    private final ProjectServiceImpl projectService;
+    private final MilestoneService milestoneService;
+    private final ProjectService projectService;
     private final TaskService taskService;
 
     @GetMapping
@@ -49,7 +49,6 @@ public class MilestoneRestController {
         }
 
         Project project = this.projectService.getProject(projectId);
-        // TODO: [TaskService]에서 getTask가 구현되어야 함. (Long task_id를 이용해서 Task를 가져옴)
         Task task = this.taskService.getTask(milestoneRequest.getTaskId());
 
         return this.milestoneService.saveMilestone(new Milestone(
