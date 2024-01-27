@@ -22,10 +22,6 @@ public class Milestone {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
-
     @Column(name = "milestone_name")
     private String milestoneName;
 
