@@ -1,4 +1,4 @@
-POST /projects/1/tasks/1/comments
+POST /projects/1/tasks/2/comments
 Host: localhost:9090
 Content-Type: application/json
 
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-PUT /projects/1/tasks/1/comments/1
+PUT /projects/1/tasks/2/comments/1
 Host: localhost:9090
 Content-Type: application/json
 
@@ -22,6 +22,6 @@ Content-Type: application/json
 
 ### Comment 번호 잘 보고 삭제
 
-DELETE /projects/1/tasks/1/comments/5
+DELETE /projects/1/tasks/2/comments/2
 Host: localhost:9090
 Content-Type: application/json

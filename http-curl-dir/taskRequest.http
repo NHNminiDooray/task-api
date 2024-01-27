@@ -50,3 +50,14 @@ Content-Type: application/json
 DELETE /projects/1/tasks/1/tags/1
 Host: localhost:9090
 Content-Type: application/json
+
+###
+
+POST /projects/2/tasks/3/milestones/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+DELETE /projects/2/tasks/3/milestones/1
+Host: localhost:9090
+Content-Type: application/json

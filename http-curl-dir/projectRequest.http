@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
   "projectStatusId": 2,
-  "projectName": "프로젝트 이름",
+  "projectName": "프로젝트 이름5?",
   "requestMembers": [
     {
       "projectMemberId": "id1",

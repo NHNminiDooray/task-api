@@ -5,10 +5,13 @@ import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.taskTag.TaskTagResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.task_milestone.TaskMilestoneDomainDto;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import com.nhnacademy.mini_dooray.taskapi.service.taskTag.TaskTagService;
 import java.util.List;
 import java.util.Objects;
+
+import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskRestController {
     private final TaskService taskService;
     private final TaskTagService taskTagService;
+    private final TaskMilestoneService taskMilestoneService;
 
     @GetMapping
     public List<TaskIndexListResponseDto> getTasks(@PathVariable("projectId") Long projectId) {
@@ -50,6 +54,12 @@ public class TaskRestController {
         return taskTagService.saveTaskTag(projectId, taskId, tagId);
     }
 
+    @PostMapping("/{taskId}/milestones/{milestoneId}")
+    public TaskMilestoneDomainDto saveMilestoneAtTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
+                                                      @PathVariable("milestoneId") Long milestoneId) {
+        return this.taskMilestoneService.createTaskMilestone(projectId, taskId, milestoneId);
+    }
+
     @PutMapping("/{taskId}")
     public TaskResponseDto updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
                                       @RequestBody TaskRequestDto taskRequest) {
@@ -69,4 +79,9 @@ public class TaskRestController {
         taskTagService.deleteTagAtTask(projectId, taskId, tagId);
     }
 
+    @DeleteMapping("/{taskId}/milestones/{milestoneId}")
+    public void deleteMilestoneAtTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
+                                @PathVariable("milestoneId") Long milestoneId) {
+        this.taskMilestoneService.deleteTaskMilestone(projectId, taskId, milestoneId);
+    }
 }
