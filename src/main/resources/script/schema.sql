@@ -171,9 +171,13 @@ VALUES ('완료');
 
 INSERT INTO project(project_status_id, project_name)
 VALUES (1, '프로젝트1');
+INSERT INTO project(project_status_id, project_name)
+VALUES (2, '프로젝트2');
 
 INSERT INTO task(project_id, task_title, task_content, task_write_member_id)
 VALUES (1, 'task1', 'task1 내용', 'user1');
+INSERT INTO task(project_id, task_title, task_content, task_write_member_id)
+VALUES (2, 'task2', 'task2 내용', 'user2');
 
 INSERT INTO milestone(project_id, milestone_name, start_period, end_period)
 VALUES (1, '마일스톤1', '2020-01-01', '2020-01-31');
