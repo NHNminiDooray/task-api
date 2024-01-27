@@ -60,6 +60,7 @@ public class TaskRestController {
         return this.taskMilestoneService.createTaskMilestone(projectId, taskId, milestoneId);
     }
 
+
     @PutMapping("/{taskId}")
     public TaskResponseDto updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
                                       @RequestBody TaskRequestDto taskRequest) {

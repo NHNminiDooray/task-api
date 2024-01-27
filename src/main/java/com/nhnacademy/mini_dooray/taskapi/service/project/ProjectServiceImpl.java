@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.service.project;
 
+import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListInterfaceResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +59,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectIndexListResponseDto> getProjectIndexListsByMemberId(String projectMemberId) {
-        return this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
+//        return this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
+        List<ProjectIndexListInterfaceResponseDto> projectsIndexListByMemberId = this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
+        return projectsIndexListByMemberId.stream().map(project ->
+                        new ProjectIndexListResponseDto(project.getProjectId(), project.getProjectName()))
+                .collect(Collectors.toList());
     }
 }

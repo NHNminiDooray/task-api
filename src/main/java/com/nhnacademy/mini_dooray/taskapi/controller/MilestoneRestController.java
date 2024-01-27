@@ -9,6 +9,7 @@ import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectExcep
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,10 +23,12 @@ public class MilestoneRestController {
     private final ProjectService projectService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<MileStoneDomainResponseDto> getMilestones(@PathVariable("projectId") Long projectId) {
         return this.milestoneService.getMilestonesByProjectId(projectId);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public MileStoneDomainResponseDto createMilestone(@PathVariable("projectId") Long projectId,
                                      @RequestBody MilestoneRequestDto milestoneRequest) {
@@ -41,6 +44,7 @@ public class MilestoneRestController {
                 milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{milestoneId}")
     public MileStoneDomainResponseDto updateMilestone(@PathVariable("projectId") Long projectId,
                                      @PathVariable("milestoneId") Long milestoneId,
@@ -52,6 +56,7 @@ public class MilestoneRestController {
         return this.milestoneService.updateMilestone(milestoneRequest, milestoneId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{milestoneId}")
     public void deleteMilestone(@PathVariable("projectId") Long projectId,
                                 @PathVariable("milestoneId") Long milestoneId) {
