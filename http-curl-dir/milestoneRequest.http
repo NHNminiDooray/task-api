@@ -15,7 +15,6 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "taskId" : 1,
   "milestoneName" : "milestone name !!!??",
   "startPeriod" : "2016-01-01T12:34:56",
   "endPeriod" : "2016-01-02T12:34:56"
@@ -28,7 +27,6 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "taskId" : 1,
   "milestoneName" : "changed name !!!~~~",
   "startPeriod" : "2016-01-01T12:34:56",
   "endPeriod" : "2016-01-02T12:34:56"
