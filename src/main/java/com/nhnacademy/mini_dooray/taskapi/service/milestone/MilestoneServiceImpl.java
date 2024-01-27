@@ -37,13 +37,6 @@ public class MilestoneServiceImpl implements MilestoneService {
                 .collect(Collectors.toList());
     }
 
-    public MileStoneDomainResponseDto getMilestoneByProjectIdAndTaskId(Long projectId, Long taskId) {
-        Milestone milestone = this.milestoneRepository.findByProject_ProjectIdAndTask_TaskId(projectId, taskId);
-
-        return new MileStoneDomainResponseDto(milestone.getMilestoneId(), milestone.getProject().getProjectId(),
-                milestone.getMilestoneName(), milestone.getStartPeriod(), milestone.getEndPeriod());
-    }
-
     public MileStoneDomainResponseDto saveMilestone(Milestone milestone) {
         Milestone savedMilestone = this.milestoneRepository.save(milestone);
 
@@ -84,8 +77,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 
     @Override
     public MileStoneResponseDto getMilestoneByTaskId(Long taskId) {
-        Milestone milestone = milestoneRepository.findById(taskId).orElseThrow(()-> new NotFoundMilestoneException("milestone을 찾을 수 없습니다"));
-        return new MileStoneResponseDto(milestone.getStartPeriod(), milestone.getEndPeriod());
+        return new MileStoneResponseDto();
     }
 
     @Override
