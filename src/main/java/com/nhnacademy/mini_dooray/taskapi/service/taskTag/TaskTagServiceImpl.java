@@ -42,6 +42,8 @@ public class TaskTagServiceImpl implements TaskTagService{
             throw new RuntimeException("Task와 Tag가 동일한 프로젝트에 속하지 않습니다.");
         }
         TaskTag taskTag = taskTagRepository.save(new TaskTag(taskId, tagId));
+
+
         return new TaskTagResponseDto(taskTag.getTask().getTaskId(), taskTag.getTag().getTagId());
     }
 
