@@ -15,6 +15,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ManageListResponseDto {
     List<TagIndexRequestDto> tagList;
-
     List<MileStoneIndexListResponseDto> milestoneList;
 }

@@ -1,0 +1,28 @@
+GET /projects/1/tags
+Host: localhost:9090
+Content-Type: application/json
+
+###
+POST /projects/1/tags
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "tagName" : "tasktagTC"
+}
+
+
+###
+PUT /projects/1/tags/6
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "tagName" : "Tag6"
+}
+
+###
+DELETE /projects/1/tags/10
+Host: localhost:9090
+Content-Type: application/json
+

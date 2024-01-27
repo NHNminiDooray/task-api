@@ -3,8 +3,10 @@ package com.nhnacademy.mini_dooray.taskapi.controller;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskDetailResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Task;
+import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.taskTag.TaskTagResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
+import com.nhnacademy.mini_dooray.taskapi.service.taskTag.TaskTagService;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/projects/{projectId}/tasks")
 public class TaskRestController {
     private final TaskService taskService;
+    private final TaskTagService taskTagService;
 
     @GetMapping
     public List<TaskIndexListResponseDto> getTasks(@PathVariable("projectId") Long projectId) {
@@ -33,16 +37,22 @@ public class TaskRestController {
     }
 
     @PostMapping
-    public Task createTask(@PathVariable("projectId") Long projectId, TaskRequestDto taskRequest) {
+    public TaskResponseDto createTask(@PathVariable("projectId") Long projectId, @RequestBody TaskRequestDto taskRequest) {
         if (Objects.isNull(taskRequest)) {
             throw new RuntimeException("Task 정보가 없습니다.");
         }
         return taskService.saveTask(projectId, taskRequest);
     }
 
+    @PostMapping("/{taskId}/tags/{tagId}")
+    public TaskTagResponseDto saveTagAtTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
+                                            @PathVariable("tagId") Long tagId) {
+        return taskTagService.saveTaskTag(projectId, taskId, tagId);
+    }
+
     @PutMapping("/{taskId}")
-    public Task updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
-                           TaskRequestDto taskRequest) {
+    public TaskResponseDto updateTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
+                                      @RequestBody TaskRequestDto taskRequest) {
         return taskService.updateTask(projectId, taskId, taskRequest);
     }
 
@@ -52,4 +62,11 @@ public class TaskRestController {
 
         taskService.deleteTask(projectId,taskId);
     }
+
+    @DeleteMapping("/{taskId}/tags/{tagId}")
+    public void deleteTagAtTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId,
+                                @PathVariable("tagId") Long tagId) {
+        taskTagService.deleteTagAtTask(projectId, taskId, tagId);
+    }
+
 }

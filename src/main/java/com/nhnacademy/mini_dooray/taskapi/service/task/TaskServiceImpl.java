@@ -3,10 +3,11 @@ package com.nhnacademy.mini_dooray.taskapi.service.task;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskDetailResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
+import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
@@ -29,21 +30,26 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public Task saveTask(Long projectId, TaskRequestDto taskRequest) {
+    public TaskResponseDto saveTask(Long projectId, TaskRequestDto taskRequest) {
         Project project = projectRepository.findById(projectId).orElseThrow(()->new NotFoundProjectException(projectId + "project를 찾을 수 없습니다"));
-        return taskRepository.save(new Task(null, project, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
+        taskRepository.save(new Task(null, project, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
                 taskRequest.getTaskWriteMemberId()));
+
+        return new TaskResponseDto(projectId, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
+                taskRequest.getTaskWriteMemberId());
     }
 
     @Override
-    public Task updateTask(Long projectId, Long taskId, TaskRequestDto taskRequest) {
+    public TaskResponseDto updateTask(Long projectId, Long taskId, TaskRequestDto taskRequest) {
         if (checkProjectId(projectId, taskId)) {
             Task task = getTask(taskId);
             task.setTaskTitle(taskRequest.getTaskTitle());
             task.setTaskContent(taskRequest.getTaskContent());
             task.setTaskWriteMemberId(taskRequest.getTaskWriteMemberId());
+            taskRepository.save(task);
 
-            return taskRepository.save(task);
+            return new TaskResponseDto(projectId, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
+                    taskRequest.getTaskWriteMemberId());
         }else{
             throw new NotFoundTaskException("Task를 찾을 수 없습니다");
         }
@@ -79,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
 
         return new TaskDetailResponseDto(task.getTaskId(), task.getTaskTitle(),
                 task.getTaskContent(), task.getTaskWriteMemberId()
-                , taskTagService.getTagResponseDtosByTaskId(taskId)
+                , taskTagService.getTagResponseDtoByTaskId(taskId)
                 , milestoneService.getMilestoneByTaskId(taskId)
                 , commentService.getCommentsByTaskId(taskId)
         );
