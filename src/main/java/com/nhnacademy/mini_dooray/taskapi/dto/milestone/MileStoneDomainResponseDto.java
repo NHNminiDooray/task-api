@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class MileStoneDomainResponseDto {
     private Long milestoneId;
     private Long projectId;
-    private Long taskId;
     private String name;
     private LocalDateTime startPeriod;
     private LocalDateTime endPeriod;
