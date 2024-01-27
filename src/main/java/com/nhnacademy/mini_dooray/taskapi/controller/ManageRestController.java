@@ -18,7 +18,4 @@ public class ManageRestController {
     public ManageListResponseDto getManages(@PathVariable("projectId") Long projectId) {
         return manageService.getManageListByProjectId(projectId);
     }
-
-
-
 }

@@ -3,7 +3,6 @@ package com.nhnacademy.mini_dooray.taskapi.controller;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
