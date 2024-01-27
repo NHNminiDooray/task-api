@@ -1,0 +1,63 @@
+GET /projects/1/tasks
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+GET /projects/1/tasks/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects/1/tasks
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "projectId" : 1,
+  "taskTitle" : "title7",
+  "taskContent" : "content222",
+  "taskWriteMemberId" : "accountNo1"
+}
+
+###
+
+PUT /projects/1/tasks/8
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "projectId" : 1,
+  "taskTitle" : "delete",
+  "taskContent" : "content8",
+  "taskWriteMemberId" : "accountNo1"
+}
+
+###
+
+DELETE /projects/1/tasks/8
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects/1/tasks/2/tags/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+DELETE /projects/1/tasks/1/tags/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects/2/tasks/3/milestones/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+DELETE /projects/2/tasks/3/milestones/1
+Host: localhost:9090
+Content-Type: application/json

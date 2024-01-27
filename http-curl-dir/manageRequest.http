@@ -1,0 +1,3 @@
+GET /projects/1/manage
+Host: localhost:9090
+Content-Type: application/json

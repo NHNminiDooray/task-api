@@ -1,8 +1,6 @@
 package com.nhnacademy.mini_dooray.taskapi.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +8,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "milestone")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Milestone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,6 @@ public class Milestone {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
-
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task taskId;
 
     @Column(name = "milestone_name")
     private String milestoneName;

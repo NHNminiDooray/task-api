@@ -1,0 +1,34 @@
+GET /projects/1/milestones
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects/1/milestones
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "milestoneName" : "milestone name !!!??",
+  "startPeriod" : "2016-01-01T12:34:56",
+  "endPeriod" : "2016-01-02T12:34:56"
+}
+
+### milestone id 잘 지정하기
+
+PUT /projects/1/milestones/2
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "milestoneName" : "changed name !!!~~~",
+  "startPeriod" : "2016-01-01T12:34:56",
+  "endPeriod" : "2016-01-02T12:34:56"
+}
+
+###
+
+DELETE /projects/1/milestones/2
+Host: localhost:9090
+Content-Type: application/json
+

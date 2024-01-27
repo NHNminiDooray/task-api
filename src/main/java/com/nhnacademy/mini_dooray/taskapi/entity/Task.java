@@ -38,6 +38,15 @@ public class Task {
     @Column(name = "task_write_member_id")
     private String taskWriteMemberId;
 
+
     @OneToMany(mappedBy = "task")
     private List<TaskTag> taskTagList;
+
+    public Task(Long taskId, Project project, String taskTitle, String taskContent, String taskWriteMemberId) {
+        this.taskId = taskId;
+        this.project = project;
+        this.taskTitle = taskTitle;
+        this.taskContent = taskContent;
+        this.taskWriteMemberId = taskWriteMemberId;
+    }
 }
