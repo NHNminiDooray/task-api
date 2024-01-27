@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MileStoneIndexListResponseDto {
-    private Long mileStoneId;
-    private String mileStoneName;
+    private Long milestoneId;
+    private String milestoneName;
     private LocalDateTime startPeriod;
     private LocalDateTime endPeriod;
 }
