@@ -4,12 +4,6 @@ Content-Type: application/json
 
 ###
 
-GET /projects/1/milestones/task/1
-Host: localhost:9090
-Content-Type: application/json
-
-###
-
 POST /projects/1/milestones
 Host: localhost:9090
 Content-Type: application/json
@@ -22,7 +16,7 @@ Content-Type: application/json
 
 ### milestone id 잘 지정하기
 
-PUT /projects/1/milestones/4
+PUT /projects/1/milestones/2
 Host: localhost:9090
 Content-Type: application/json
 
@@ -34,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-DELETE /projects/1/milestones/4
+DELETE /projects/1/milestones/2
 Host: localhost:9090
 Content-Type: application/json
 

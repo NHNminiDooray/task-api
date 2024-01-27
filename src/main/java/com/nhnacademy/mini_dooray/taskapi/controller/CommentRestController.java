@@ -8,6 +8,7 @@ import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
+import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,8 +57,8 @@ public class CommentRestController {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }
 
-        if (!this.commentService.isExist(taskId)) {
-            throw new NotFoundTaskException("게시글이 존재하지 않습니다.");
+        if (!this.commentService.isExist(commentId)) {
+            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
         }
 
         this.commentService.deleteComment(commentId);
