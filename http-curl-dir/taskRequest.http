@@ -23,19 +23,30 @@ Content-Type: application/json
 
 ###
 
-PUT /projects/1/tasks/7
+PUT /projects/1/tasks/8
 Host: localhost:9090
 Content-Type: application/json
 
 {
   "projectId" : 1,
   "taskTitle" : "delete",
-  "taskContent" : "content6",
+  "taskContent" : "content8",
   "taskWriteMemberId" : "accountNo1"
 }
 
 ###
 
-DELETE /projects/1/tasks/7
+DELETE /projects/1/tasks/8
+Host: localhost:9090
+Content-Type: application/json
+
+###
+
+POST /projects/1/tasks/2/tags/1
+Host: localhost:9090
+Content-Type: application/json
+
+###
+DELETE /projects/1/tasks/1/tags/1
 Host: localhost:9090
 Content-Type: application/json

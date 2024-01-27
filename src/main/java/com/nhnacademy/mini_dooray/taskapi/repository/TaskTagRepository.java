@@ -8,4 +8,6 @@ public interface TaskTagRepository extends JpaRepository<TaskTag, TaskTag.Pk> {
 
     List<TaskTag> findAllByPk_TaskId(Long taskId);
 
-    boolean existsByPk_TagId(Long tagId);}
+
+    boolean existsByPk_TagId(Long tagId);
+}

@@ -1,7 +1,7 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
+import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.service.tag.TagService;
 import java.util.List;
 import java.util.Objects;
@@ -26,13 +26,9 @@ public class TagController {
         return tagService.getTagsByProjectId(projectId);
     }
 
-    @GetMapping("/task/{taskId}")
-    public List<TagRequestDto> getTagsInTask(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId) {
-        return tagService.getTagsByProejctIdAndTaskId(projectId, taskId);
-    }
 
     @PostMapping
-    public Tag createTag(@PathVariable("projectId") Long projectId,@RequestBody TagRequestDto tagRequest) {
+    public TagResponseDto createTag(@PathVariable("projectId") Long projectId, @RequestBody TagRequestDto tagRequest) {
         if (Objects.isNull(tagRequest)) {
             throw new RuntimeException("Task 정보가 없습니다.");
         }
@@ -41,7 +37,9 @@ public class TagController {
 
 
     @PutMapping("/{tagId}")
-    public Tag updateTag(@PathVariable("projectId") Long projectId, @PathVariable("tagId") Long tagId, @RequestBody TagRequestDto tagRequest) {
+    public TagResponseDto updateTag(@PathVariable("projectId") Long projectId, @PathVariable("tagId") Long tagId,
+                         @RequestBody TagRequestDto tagRequest) {
+
         return tagService.updateTag(projectId, tagId, tagRequest);
 
     }

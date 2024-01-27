@@ -6,41 +6,23 @@ Content-Type: application/json
 POST /projects/1/tags
 Host: localhost:9090
 Content-Type: application/json
+
 {
-  "tagName" : "TagTest8"
+  "tagName" : "tasktagTC"
 }
 
 
 ###
-PUT /projects/1/tags/9
-Host: localhost:9090
-Content-Type: application/json
-{
-  "tagName" : "Tag9"
-}
-
-###
-DELETE /projects/1/tags/8
-Host: localhost:9090
-Content-Type: application/json
-
-
-
-
-
-
-
-
-###
-GET /projects/1/tasks/1/tags
-Host: localhost:9090
-Content-Type: application/json
-
-###
-POST /projects/1/task/1/tags
+PUT /projects/1/tags/6
 Host: localhost:9090
 Content-Type: application/json
 
 {
-  "tagName" : "TagNo2"
+  "tagName" : "Tag6"
 }
+
+###
+DELETE /projects/1/tags/10
+Host: localhost:9090
+Content-Type: application/json
+

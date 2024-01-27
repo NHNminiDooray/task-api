@@ -49,4 +49,8 @@ public class TaskTag {
         private Long tagId;
     }
 
+    public TaskTag(Long taskId, Long tagId) {
+        this.pk = new Pk(taskId, tagId);
+    }
+
 }

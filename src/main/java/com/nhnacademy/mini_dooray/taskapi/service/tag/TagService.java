@@ -2,7 +2,7 @@ package com.nhnacademy.mini_dooray.taskapi.service.tag;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagIndexRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
+import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
 import java.util.List;
 
 public interface TagService {
@@ -11,9 +11,9 @@ public interface TagService {
 
     List<TagRequestDto> getTagsByProejctIdAndTaskId(Long projectId, Long taskId);
 
-    Tag saveTag(Long projectId,  TagRequestDto tagRequest);
+    TagResponseDto saveTag(Long projectId, TagRequestDto tagRequest);
 
-    Tag updateTag(Long projectId, Long tagId, TagRequestDto tagRequest);
+    TagResponseDto updateTag(Long projectId, Long tagId, TagRequestDto tagRequest);
 
     void deleteTag(Long projectId, Long tagId);
 }
