@@ -5,14 +5,12 @@ import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
-import com.nhnacademy.mini_dooray.taskapi.entity.TaskTag;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.exception.tag.NotFoundTagException;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TagRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskTagRepository;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,21 +38,6 @@ public class TagServiceImpl implements TagService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<TagRequestDto> getTagsByProejctIdAndTaskId(Long projectId, Long taskId){
-        List<Tag> tags = tagRepository.findAllByProject_ProjectId(projectId);
-        List<TaskTag> taskTags = taskTagRepository.findAllByPk_TaskId(taskId);
-
-        Set<Long> taskTagIds = taskTags.stream()
-                .map(taskTag -> taskTag.getTag().getTagId())
-                .collect(Collectors.toSet());
-
-        return tags.stream()
-                .filter(tag -> taskTagIds.contains(tag.getTagId()))
-                .map(tag -> new TagRequestDto(tag.getTagName()))
-                .collect(Collectors.toList());
-    }
-
 
     @Override
     public TagResponseDto saveTag(Long projectId, TagRequestDto tagRequest) {
@@ -65,7 +48,6 @@ public class TagServiceImpl implements TagService {
         return new TagResponseDto(tag.getTagName());
 
     }
-
 
 
     @Override
@@ -93,7 +75,8 @@ public class TagServiceImpl implements TagService {
     }
 
     public boolean checkProjectId(Long projectId, Long tagId) {
-        return (tagRepository.getById(tagId).getProject().getProjectId() == projectId) ? true : false;
+        Tag tag = tagRepository.getById(tagId);
+        return tag.getProject().getProjectId().equals(projectId);
     }
 
 }

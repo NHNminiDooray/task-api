@@ -97,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkProjectId(Long projectId, Long taskId) {
-        return (taskRepository.getById(taskId).getProject().getProjectId() == projectId) ? true : false;
-
+        Task task = taskRepository.getById(taskId);
+        return task.getProject().getProjectId().equals(projectId);
     }
 }
