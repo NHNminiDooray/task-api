@@ -184,3 +184,8 @@ VALUES (1, '마일스톤1', '2020-01-01', '2020-01-31');
 
 INSERT INTO task_milestone(task_id, milestone_id)
 VALUES (2, 1);
+
+# SELECT *
+# from project
+#     join project_member ON project.project_id = project_member.project_id
+# where project_member.project_member_id = 'id1';
