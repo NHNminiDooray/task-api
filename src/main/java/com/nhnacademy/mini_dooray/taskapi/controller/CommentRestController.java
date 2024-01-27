@@ -7,14 +7,10 @@ import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
+import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +19,7 @@ public class CommentRestController {
     private final ProjectService projectService;
     private final CommentService commentService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public CommentDomainResponseDto createComment(@PathVariable("projectId") Long projectId,
                                                   @PathVariable("taskId") Long taskId,
@@ -35,6 +32,7 @@ public class CommentRestController {
     }
 
     @PutMapping("/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
     public CommentDomainResponseDto updateComment(@PathVariable("projectId") Long projectId,
                                  @PathVariable("taskId") Long taskId,
                                  @PathVariable("commentId") Long commentId,
@@ -47,6 +45,7 @@ public class CommentRestController {
         return this.commentService.updateComment(taskId, commentId, requestDto);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{commentId}")
     public void deleteComment(@PathVariable("projectId") Long projectId,
                               @PathVariable("taskId") Long taskId,
@@ -55,8 +54,8 @@ public class CommentRestController {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }
 
-        if (!this.commentService.isExist(taskId)) {
-            throw new NotFoundTaskException("게시글이 존재하지 않습니다.");
+        if (!this.commentService.isExist(commentId)) {
+            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
         }
 
         this.commentService.deleteComment(commentId);
