@@ -10,7 +10,6 @@ import java.util.List;
 public interface MilestoneService {
     boolean isExist(Long milestoneId);
     List<MileStoneDomainResponseDto> getMilestonesByProjectId(Long projectId);
-    MileStoneDomainResponseDto getMilestoneByProjectIdAndTaskId(Long projectId, Long taskId);
 
     MileStoneDomainResponseDto saveMilestone(Milestone milestone);
 
