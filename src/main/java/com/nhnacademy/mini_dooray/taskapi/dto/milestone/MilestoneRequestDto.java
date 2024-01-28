@@ -4,10 +4,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Getter
-@Setter
+
 @ToString
 public class MilestoneRequestDto {
     private String milestoneName;

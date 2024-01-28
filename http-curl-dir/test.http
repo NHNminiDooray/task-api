@@ -1,7 +1,0 @@
-POST /projects/list
-Host: localhost:9090
-Content-Type: application/json
-
-{
-  "memberName": "qwe"
-}
