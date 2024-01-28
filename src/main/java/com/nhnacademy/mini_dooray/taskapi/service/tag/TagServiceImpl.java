@@ -8,6 +8,7 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
 import com.nhnacademy.mini_dooray.taskapi.entity.TaskTag;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.exception.tag.NotFoundTagException;
+import com.nhnacademy.mini_dooray.taskapi.exception.tasktag.NotFoundTaskTagException;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TagRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskTagRepository;
@@ -76,7 +77,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public void deleteTag(Long projectId, Long tagId) {
         if (taskTagRepository.existsByPk_TagId(tagId)) {
-            throw new RuntimeException("태그를 사용하는 태스크가 있습니다");
+            throw new NotFoundTaskTagException("태그를 사용하는 태스크가 있습니다");
         }
         if (checkProjectId(projectId, tagId)) {
             tagRepository.deleteById(tagId);

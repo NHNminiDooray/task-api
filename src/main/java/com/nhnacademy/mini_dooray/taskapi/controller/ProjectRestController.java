@@ -5,6 +5,7 @@ import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListResponseDt
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberException;
+import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
 import java.util.List;
 import java.util.Objects;
@@ -28,15 +29,14 @@ public class ProjectRestController {
         if (Objects.isNull(requestDto.getMemberName())) {
             throw new NotFoundMemberException("프로젝트 리스트를 찾기 위한 멤버 아이디가 입력되지 않았습니다.");
         }
-        List<ProjectIndexListResponseDto> responseDtos = this.projectService.getProjectIndexListsByMemberId(requestDto.getMemberName());
-        return responseDtos;
+        return this.projectService.getProjectIndexListsByMemberId(requestDto.getMemberName());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectRegisterResponseDto createProject(@RequestBody ProjectRegisterRequestDto requestDto) {
         if (Objects.isNull(requestDto.getProjectName()) || Objects.isNull(requestDto.getProjectStatusId()) || Objects.isNull(requestDto.getRequestMembers())) {
-            throw new RuntimeException("프로젝트 정보가 없습니다.");
+            throw new NotFoundProjectException();
         }
 
         return this.projectService.saveProject(requestDto, requestDto.getRequestMembers());

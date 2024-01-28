@@ -1,4 +1,4 @@
-package com.nhnacademy.mini_dooray.taskapi.dto.taskTag;
+package com.nhnacademy.mini_dooray.taskapi.dto.tasktag;
 
 
 import lombok.AllArgsConstructor;

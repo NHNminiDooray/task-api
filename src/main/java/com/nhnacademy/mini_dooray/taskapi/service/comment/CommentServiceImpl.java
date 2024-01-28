@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long commentId) {
         if (!this.commentRepository.existsById(commentId)) {
-            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
+            throw new NotFoundCommentException("댓글이 존재하지 않습니다.");
         }
 
         this.commentRepository.deleteById(commentId);

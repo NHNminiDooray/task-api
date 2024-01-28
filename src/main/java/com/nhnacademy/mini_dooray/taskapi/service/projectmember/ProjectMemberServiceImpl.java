@@ -1,9 +1,10 @@
-package com.nhnacademy.mini_dooray.taskapi.service.projectMember;
+package com.nhnacademy.mini_dooray.taskapi.service.projectmember;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.ProjectMember;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectMemberRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService{
 
     @Override
     public List<Long> getProjectIdByMemberId(String memberId) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

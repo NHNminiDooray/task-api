@@ -8,10 +8,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 
     List<Task> findAllByProjectProjectId(Long projectId);
 
-
-    // TODO: 에러 떠서 수정하겠습니다. - 김영웅
-//    Task findByProjectIdAndTaskId(Long projectId, Long taskId);
     Task findByProject_ProjectIdAndTaskId(Long projectId, Long taskId);
-
 
 }

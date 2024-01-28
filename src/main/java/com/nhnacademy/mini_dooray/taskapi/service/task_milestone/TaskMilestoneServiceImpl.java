@@ -33,7 +33,7 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
 
     public TaskMilestoneDomainDto createTaskMilestone(Long projectId, Long taskId, Long milestoneId) {
         if (!projectRepository.existsById(projectId)) {
-            throw new NotFoundProjectException("존재하지 않는 프로젝트입니다.");
+            throw new NotFoundProjectException();
         }
 
         Task task = taskRepository.findById(taskId)
@@ -47,7 +47,7 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
 
     public void deleteTaskMilestone(Long projectId, Long taskId, Long milestoneId) {
         if (!projectRepository.existsById(projectId)) {
-            throw new NotFoundProjectException("존재하지 않는 프로젝트입니다.");
+            throw new NotFoundProjectException();
         }
 
         TaskMilestone.Pk pk = taskMilestoneRepository.findById(new TaskMilestone.Pk(taskId, milestoneId))
