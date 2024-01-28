@@ -1,6 +1,7 @@
 package com.nhnacademy.mini_dooray.taskapi.service.manage;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.manage.ManageListResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.manage.TaskManageListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
 import com.nhnacademy.mini_dooray.taskapi.service.tag.TagService;
 import lombok.RequiredArgsConstructor;
@@ -15,5 +16,11 @@ public class ManageServiceImpl implements ManageService {
     @Override
     public ManageListResponseDto getManageListByProjectId(Long projectId) {
         return new ManageListResponseDto(tagService.getTagListByProjectId(projectId), milestoneService.getMileStonesListByProjectId(projectId));
+    }
+
+
+    @Override
+    public TaskManageListResponseDto getTaskManageListByProjectIdAndTaskId(Long projectId, Long taskId) {
+        return new TaskManageListResponseDto(tagService.getTagListByProjectId(projectId), tagService.getTagListByProjectIdAndTaskId(projectId, taskId));
     }
 }

@@ -13,6 +13,7 @@ import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
 import com.nhnacademy.mini_dooray.taskapi.service.taskTag.TaskTagService;
+import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final TaskTagService taskTagService;
+    private final TaskMilestoneService taskMilestoneService;
     private final CommentService commentService;
     private final MilestoneService milestoneService;
 
@@ -85,8 +87,8 @@ public class TaskServiceImpl implements TaskService {
 
         return new TaskDetailResponseDto(task.getTaskId(), task.getTaskTitle(),
                 task.getTaskContent(), task.getTaskWriteMemberId()
-                , taskTagService.getTagResponseDtoByTaskId(taskId)
-                , milestoneService.getMilestoneByTaskId(taskId)
+                , taskTagService.getTagResponseDtoByTaskId(taskId),
+                taskMilestoneService.getMilestoneResponseDtoByTaskId(taskId)
                 , commentService.getCommentsByTaskId(taskId)
         );
     }
