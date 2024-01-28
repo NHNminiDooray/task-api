@@ -32,7 +32,6 @@ public class ProjectRestController {
         return responseDtos;
     }
 
-    // TODO: [Front]에서 ProjectMemberDto, ProjectMemberRequestDto 형식에 맞게 보내주어야 함
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectRegisterResponseDto createProject(@RequestBody ProjectRegisterRequestDto requestDto) {

@@ -59,7 +59,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectIndexListResponseDto> getProjectIndexListsByMemberId(String projectMemberId) {
-//        return this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
         List<ProjectIndexListInterfaceResponseDto> projectsIndexListByMemberId = this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
         return projectsIndexListByMemberId.stream().map(project ->
                         new ProjectIndexListResponseDto(project.getProjectId(), project.getProjectName()))
