@@ -6,7 +6,7 @@ import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
-import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundComment;
+import com.nhnacademy.mini_dooray.taskapi.exception.NotFoundCommentException;
 import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.repository.CommentRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
@@ -43,15 +43,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDomainResponseDto updateComment(Long taskId, Long commentId, CommentModifyRequestDto requestDto) {
-        if (!this.commentRepository.existsById(commentId)) {
-            throw new NotFoundComment("댓글이 존재하지 않습니다.");
-        }
         if (!this.taskRepository.existsById(taskId)) {
             throw new NotFoundTaskException("게시글이 존재하지 않습니다.");
         }
 
         Comment savedComment = this.commentRepository.findById(commentId)
-                .orElseThrow(() -> new NotFoundComment("댓글이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundCommentException("댓글이 존재하지 않습니다."));
 
         savedComment.setCommentCreatedAt(requestDto.getCommentCreatedAt());
         savedComment.setCommentWriterMemberId(requestDto.getCommentWriterMemberId());
