@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface TagService {
     List<TagIndexRequestDto> getTagListByProjectId(Long projectId);
+
+    List<TagIndexRequestDto> getTagListByProjectIdAndTaskId(Long projectId, Long taskId);
+
     List<TagRequestDto> getTagsByProjectId(Long projectId);
 
     TagResponseDto saveTag(Long projectId, TagRequestDto tagRequest);

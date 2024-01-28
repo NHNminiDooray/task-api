@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -47,10 +48,6 @@ public class TaskTag {
 
         @Column(name = "tag_id")
         private Long tagId;
-    }
-
-    public TaskTag(Long taskId, Long tagId) {
-        this.pk = new Pk(taskId, tagId);
     }
 
 }

@@ -5,6 +5,7 @@ import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
+import com.nhnacademy.mini_dooray.taskapi.entity.TaskTag;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.exception.tag.NotFoundTagException;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
@@ -27,6 +28,16 @@ public class TagServiceImpl implements TagService {
         List<Tag> tags = tagRepository.findAllByProject_ProjectId(projectId);
         return tags.stream()
                 .map(tag -> new TagIndexRequestDto(tag.getTagId(), tag.getTagName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TagIndexRequestDto> getTagListByProjectIdAndTaskId(Long projectId, Long taskId) {
+        List<TaskTag> taskTags = taskTagRepository.findAllByPk_TaskId(taskId);
+
+        return taskTags.stream()
+                .filter(taskTag -> taskTag.getTag().getProject().getProjectId().equals(projectId))
+                .map(taskTag -> new TagIndexRequestDto(taskTag.getTag().getTagId(), taskTag.getTag().getTagName()))
                 .collect(Collectors.toList());
     }
 

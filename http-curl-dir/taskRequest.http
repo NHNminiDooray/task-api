@@ -16,8 +16,8 @@ Content-Type: application/json
 
 {
   "projectId" : 1,
-  "taskTitle" : "title7",
-  "taskContent" : "content222",
+  "taskTitle" : "titleNo1",
+  "taskContent" : "Contentabc",
   "taskWriteMemberId" : "accountNo1"
 }
 
