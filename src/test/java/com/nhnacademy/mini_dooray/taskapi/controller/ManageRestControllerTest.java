@@ -10,8 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
 import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
+import com.nhnacademy.mini_dooray.taskapi.entity.Task;
+import com.nhnacademy.mini_dooray.taskapi.entity.TaskTag;
 import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TagRepository;
+import com.nhnacademy.mini_dooray.taskapi.repository.TaskTagRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +37,8 @@ class ManageRestControllerTest {
 
     @MockBean
     MilestoneRepository milestoneRepository;
-
+    @MockBean
+    TaskTagRepository taskTagRepository;
 
     @Test
     @DisplayName("Manage_Response")
@@ -67,6 +71,36 @@ class ManageRestControllerTest {
                 .andExpect(jsonPath("$.milestoneList[1].startPeriod", equalTo("2016-01-01T12:34:58")))
                 .andExpect(jsonPath("$.milestoneList[1].endPeriod", equalTo("2016-01-01T12:34:59")))
         ;
-
     }
+    @Test
+    @DisplayName("Task_Manage_Response")
+    void testGetTaskManages() throws Exception {
+        Long projectId = 1L;
+        Long taskId = 1L;
+        Project project = new Project(projectId, null, "project1");
+        Tag tag1 = new Tag(1L, project, "tag1");
+        Tag tag2 = new Tag(2L, project, "tag2");
+
+        Task task = new Task(taskId, project, "task1", "task1Content", "account1");
+
+        TaskTag taskTag1 = new TaskTag(new TaskTag.Pk(taskId, 1L), tag1, task);
+        TaskTag taskTag2 = new TaskTag(new TaskTag.Pk(taskId, 2L), tag2, task);
+
+        given(tagRepository.findAllByProject_ProjectId(projectId)).willReturn(List.of(tag1, tag2));
+        given(taskTagRepository.findAllByPk_TaskId(taskId)).willReturn(List.of(taskTag1, taskTag2));
+
+        mockMvc.perform(get("/projects/{projectId}/tasks/{taskId}/manage", projectId, taskId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.projectTagList[0].tagId", equalTo(1)))
+                .andExpect(jsonPath("$.projectTagList[0].tagName", equalTo("tag1")))
+                .andExpect(jsonPath("$.projectTagList[1].tagId", equalTo(2)))
+                .andExpect(jsonPath("$.projectTagList[1].tagName", equalTo("tag2")))
+                .andExpect(jsonPath("$.taskTagList[0].tagId", equalTo(1)))
+                .andExpect(jsonPath("$.taskTagList[0].tagName", equalTo("tag1")))
+                .andExpect(jsonPath("$.taskTagList[1].tagId", equalTo(2)))
+                .andExpect(jsonPath("$.taskTagList[1].tagName", equalTo("tag2")))
+        ;
+    }
+
 }

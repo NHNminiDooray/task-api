@@ -10,15 +10,15 @@ Content-Type: application/json
 
 ###
 
-PUT /projects/1/tasks/2/comments/1
+PUT /projects/1/tasks/4/comments/2
 Host: localhost:9090
 Content-Type: application/json
 
- {
-    "commentCreatedAt": "0001-01-01T12:34:56",
-    "commentWriterMemberId": "changed writer member id~~~",
-    "commentContent": "changed content!~!~!"
- }
+{
+  "commentCreatedAt": "2222-01-01T12:34:56",
+  "commentWriterMemberId": "writer11",
+  "commentContent": "changed content!~!~!"
+}
 
 ### Comment 번호 잘 보고 삭제
 
