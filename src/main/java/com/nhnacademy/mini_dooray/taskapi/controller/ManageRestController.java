@@ -21,7 +21,7 @@ public class ManageRestController {
     }
 
     @GetMapping("/tasks/{taskId}/manage")
-    public TaskManageListResponseDto getManages(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId ) {
+    public TaskManageListResponseDto getTaskManages(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Long taskId ) {
         return manageService.getTaskManageListByProjectIdAndTaskId(projectId, taskId);
     }
 }
