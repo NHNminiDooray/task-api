@@ -3,11 +3,9 @@ package com.nhnacademy.mini_dooray.taskapi.controller;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
-import com.nhnacademy.mini_dooray.taskapi.exception.task.NotFoundTaskException;
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
-import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +35,6 @@ public class CommentRestController {
                                  @PathVariable("taskId") Long taskId,
                                  @PathVariable("commentId") Long commentId,
                                  @RequestBody CommentModifyRequestDto requestDto) {
-        System.out.println("requestDto = " + requestDto);
         if (!this.projectService.isExist(projectId)) {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }
@@ -52,10 +49,6 @@ public class CommentRestController {
                               @PathVariable("commentId") Long commentId) {
         if (!this.projectService.isExist(projectId)) {
             throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
-        }
-
-        if (!this.commentService.isExist(commentId)) {
-            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
         }
 
         this.commentService.deleteComment(commentId);

@@ -26,7 +26,6 @@ public class TagController {
         return tagService.getTagsByProjectId(projectId);
     }
 
-
     @PostMapping
     public TagResponseDto createTag(@PathVariable("projectId") Long projectId, @RequestBody TagRequestDto tagRequest) {
         if (Objects.isNull(tagRequest)) {
