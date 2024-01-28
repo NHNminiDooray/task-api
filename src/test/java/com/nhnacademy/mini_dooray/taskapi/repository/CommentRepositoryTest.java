@@ -35,7 +35,7 @@ class CommentRepositoryTest {
     void findAllByTask_TaskId() {
         entityManager.merge(task);
         entityManager.merge(comment);
-        List<Comment> allByTaskTaskId = commentRepository.findAllByTask_TaskId(task.getTaskId());
+        List<Comment> allByTaskTaskId = commentRepository.findAllByTaskTaskId(task.getTaskId());
 
         assertEquals(1L, allByTaskTaskId.size());
         assertEquals(comment.getCommentId(),allByTaskTaskId.get(0).getCommentId());

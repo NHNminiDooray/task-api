@@ -20,6 +20,7 @@ import com.nhnacademy.mini_dooray.taskapi.entity.Tag;
 import com.nhnacademy.mini_dooray.taskapi.repository.TagRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskTagRepository;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -51,7 +52,7 @@ class TagControllerTest {
     @DisplayName("전체 Tag조회")
     void testGetTags() throws Exception {
         Project project = new Project(1L, null, "projectname");
-        given(tagRepository.findAllByProject_ProjectId(1L)).willReturn(
+        given(tagRepository.findAllByProjectProjectId(1L)).willReturn(
                 List.of(new Tag(1L, project, "tag1"), new Tag(2L, project, "tag2")));
 
         mockMvc.perform(get("/projects/{projectId}/tags", 1L))
@@ -87,7 +88,7 @@ class TagControllerTest {
     void testUpdateTag() throws Exception {
         Tag lastTag = new Tag(3L, new Project(1L, null, "projectname"), "tag3");
 
-        given(tagRepository.getById(3L)).willReturn(lastTag);
+        given(tagRepository.findById(3L)).willReturn(Optional.of(lastTag));
         TagRequestDto tagRequestDto = new TagRequestDto("tag3Up");
 
         given(tagRepository.save(any(Tag.class))).willAnswer(invocation -> {
@@ -107,9 +108,9 @@ class TagControllerTest {
     @Order(4)
     @DisplayName("Project에서 Tag 삭제")
     void testDeleteTag() throws Exception {
-        given(taskTagRepository.existsByPk_TagId(3L)).willReturn(false);
+        given(taskTagRepository.existsByPkTagId(3L)).willReturn(false);
 
-        given(tagRepository.getById(3L)).willReturn(new Tag(3L, new Project(1L, null, "projectname"),"tag3"));
+        given(tagRepository.findById(3L)).willReturn(Optional.of(new Tag(3L, new Project(1L, null, "projectname"), "tag3")));
 
         mockMvc.perform(delete("/projects/{projectId}/tags/{tagId}", 1L, 3L))
                 .andExpect(status().isOk());

@@ -26,7 +26,7 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public MileStoneResponseDto getMilestoneResponseDtoByTaskId( Long taskId) {
-        List<TaskMilestone> taskMilestone = taskMilestoneRepository.findAllByPk_TaskId(taskId);
+        List<TaskMilestone> taskMilestone = taskMilestoneRepository.findAllByPkTaskId(taskId);
         return new MileStoneResponseDto(taskMilestone.get(0).getMilestone().getStartPeriod(),
                 taskMilestone.get(0).getMilestone().getEndPeriod());
     }

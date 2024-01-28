@@ -16,6 +16,7 @@ import com.nhnacademy.mini_dooray.taskapi.service.tasktag.TaskTagService;
 import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDetailResponseDto getTaskByProjectIdAndTaskId(Long projectId, Long taskId) {
-        Task task = taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
+        Task task = taskRepository.findByProjectProjectIdAndTaskId(projectId, taskId);
         if (Objects.isNull(task)) {
             throw new NotFoundTaskException();
         }
@@ -99,7 +100,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkProjectId(Long projectId, Long taskId) {
-        Task task = taskRepository.getById(taskId);
-        return task.getProject().getProjectId().equals(projectId);
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            return task.getProject().getProjectId().equals(projectId);
+        }
+        return false;
     }
 }

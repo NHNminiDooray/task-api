@@ -24,7 +24,7 @@ public class TaskTagServiceImpl implements TaskTagService{
 
     @Override
     public List<TagResponseDto> getTagResponseDtoByTaskId(Long taskId) {
-        List<TaskTag> taskTags = taskTagRepository.findAllByPk_TaskId(taskId);
+        List<TaskTag> taskTags = taskTagRepository.findAllByPkTaskId(taskId);
         return taskTags.stream()
                 .map(taskTag -> new TagResponseDto(taskTag.getTag().getTagName()))
                 .collect(Collectors.toList());
@@ -32,7 +32,7 @@ public class TaskTagServiceImpl implements TaskTagService{
 
     @Override
     public TaskTagResponseDto saveTaskTag(Long projectId, Long taskId, Long tagId) {
-        Task task = taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
+        Task task = taskRepository.findByProjectProjectIdAndTaskId(projectId, taskId);
         if (!task.getProject().getProjectId().equals(projectId)) {
             throw new NotFoundTaskTagException("Task가 Project에 속하지 않습니다.");
         }
@@ -50,7 +50,7 @@ public class TaskTagServiceImpl implements TaskTagService{
 
     @Override
     public void deleteTagAtTask(Long projectId, Long taskId, Long tagId) {
-        Task task = taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
+        Task task = taskRepository.findByProjectProjectIdAndTaskId(projectId, taskId);
         if (!task.getProject().getProjectId().equals(projectId)) {
             throw new NotFoundTaskTagException("Task가 Project에 속하지 않습니다.");
         }

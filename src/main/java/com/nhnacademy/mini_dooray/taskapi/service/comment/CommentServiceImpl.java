@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> getCommentsByTaskId(Long taskId) {
-        List<Comment> comments = commentRepository.findAllByTask_TaskId(taskId);
+        List<Comment> comments = commentRepository.findAllByTaskTaskId(taskId);
         return comments.stream()
                 .map(comment -> new CommentResponseDto(comment.getCommentId(),
                         comment.getCommentWriterMemberId(),

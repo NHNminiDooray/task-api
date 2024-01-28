@@ -8,21 +8,21 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "tagName" : "tasktagTC2"
+  "tagName" : "tagCode"
 }
 
 
 ###
-PUT /projects/1/tags/6
+PUT /projects/1/tags/14
 Host: localhost:9090
 Content-Type: application/json
 
 {
-  "tagName" : "Tag6"
+  "tagName" : "tag14"
 }
 
 ###
-DELETE /projects/1/tags/10
+DELETE /projects/1/tags/14
 Host: localhost:9090
 Content-Type: application/json
 

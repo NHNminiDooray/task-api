@@ -1,5 +1,16 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListInterfaceResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectIndexListRequestDto;
@@ -12,6 +23,8 @@ import com.nhnacademy.mini_dooray.taskapi.exception.member.NotFoundMemberExcepti
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectMemberRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectStatusRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +33,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -72,7 +75,7 @@ class ProjectRestControllerTest {
         given(projectIndexListInterfaceResponseDto.getProjectName()).willReturn("project name");
         given(this.projectRepository.findProjectsIndexListByMemberId(anyString())).willReturn(List.of(projectIndexListInterfaceResponseDto));
 
-        mockMvc.perform(post("/projects/list")
+        MvcResult result = mockMvc.perform(post("/projects/list")
                         .content(objectMapper.writeValueAsString(new ProjectIndexListRequestDto("member name")))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpectAll(
@@ -81,7 +84,8 @@ class ProjectRestControllerTest {
                 .andExpectAll(
                         jsonPath("$[0].projectId").value(1L),
                         jsonPath("$[0].projectName").value("project name")
-                );
+                ).andReturn();
+        assertNotNull(result.getResponse());
     }
 
     @Test
@@ -112,7 +116,7 @@ class ProjectRestControllerTest {
         given(this.projectRepository.save(any(Project.class))).willReturn(project);
         given(this.projectMemberRepository.save(any(ProjectMember.class))).willReturn(new ProjectMember());
 
-        mockMvc.perform(post("/projects")
+        MvcResult result = mockMvc.perform(post("/projects")
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpectAll(
@@ -122,6 +126,7 @@ class ProjectRestControllerTest {
                         jsonPath("$.projectId").value(project.getProjectId()),
                         jsonPath("$.projectStatusId").value(requestDto.getProjectStatusId()),
                         jsonPath("$.projectName").value(requestDto.getProjectName())
-                );
+                ).andReturn();
+        assertNotNull(result.getResponse());
     }
 }

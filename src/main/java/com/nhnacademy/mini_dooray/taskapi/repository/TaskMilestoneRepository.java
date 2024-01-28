@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskMilestoneRepository extends JpaRepository<TaskMilestone, TaskMilestone.Pk> {
 
-    List<TaskMilestone> findAllByPk_TaskId(Long taskId);
+    List<TaskMilestone> findAllByPkTaskId(Long taskId);
 
-    List<TaskMilestone> findAllTaskMilestonesByMilestone_MilestoneId(Long milestoneId);
+    List<TaskMilestone> findAllTaskMilestonesByMilestoneMilestoneId(Long milestoneId);
 }
