@@ -32,16 +32,16 @@ public class MilestoneRestController {
     @PostMapping
     public MileStoneDomainResponseDto createMilestone(@PathVariable("projectId") Long projectId,
                                      @RequestBody MilestoneRequestDto milestoneRequest) {
-        if (Objects.isNull(milestoneRequest)) {
-            throw new NotFoundMilestoneException("마일스톤 정보가 없습니다.");
+        try {
+            Project project = this.projectService.getProject(projectId);
+
+            return this.milestoneService.saveMilestone(new Milestone(
+                    null, // Auto Increment
+                    project, milestoneRequest.getMilestoneName(),
+                    milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
+        } catch (NullPointerException e) {
+            throw new RuntimeException("마일스톤 등록에 필요한 정보들이 부족합니다.");
         }
-
-        Project project = this.projectService.getProject(projectId);
-
-        return this.milestoneService.saveMilestone(new Milestone(
-                null, // Auto Increment
-                project, milestoneRequest.getMilestoneName(),
-                milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -61,7 +61,7 @@ public class MilestoneRestController {
     public void deleteMilestone(@PathVariable("projectId") Long projectId,
                                 @PathVariable("milestoneId") Long milestoneId) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundMilestoneException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
         }
         if (!this.milestoneService.isExist(milestoneId)) {
             throw new NotFoundMilestoneException("마일스톤이 존재하지 않습니다.");
