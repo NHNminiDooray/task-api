@@ -13,7 +13,8 @@ import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskMilestoneRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
-import java.util.List;
+import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,9 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public MileStoneResponseDto getMilestoneResponseDtoByTaskId( Long taskId) {
-        List<TaskMilestone> taskMilestone = taskMilestoneRepository.findAllByPkTaskId(taskId);
-        return new MileStoneResponseDto(taskMilestone.get(0).getMilestone().getStartPeriod(),
-                taskMilestone.get(0).getMilestone().getEndPeriod());
+        TaskMilestone taskMilestone = taskMilestoneRepository.findAllByPkTaskId(taskId);
+        return Objects.isNull(taskMilestone) ? new MileStoneResponseDto() : new MileStoneResponseDto(
+                taskMilestone.getMilestone().getMilestoneId(), taskMilestone.getMilestone().getStartPeriod(), taskMilestone.getMilestone().getEndPeriod());
     }
 
     public TaskMilestoneDomainDto createTaskMilestone(Long projectId, Long taskId, Long milestoneId) {

@@ -1,12 +1,12 @@
 package com.nhnacademy.mini_dooray.taskapi.repository;
 
 import com.nhnacademy.mini_dooray.taskapi.entity.TaskMilestone;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TaskMilestoneRepository extends JpaRepository<TaskMilestone, TaskMilestone.Pk> {
+import java.util.List;
 
-    List<TaskMilestone> findAllByPkTaskId(Long taskId);
+public interface TaskMilestoneRepository extends JpaRepository<TaskMilestone, TaskMilestone.Pk> {
+    TaskMilestone findAllByPkTaskId(Long taskId);
 
     List<TaskMilestone> findAllTaskMilestonesByMilestoneMilestoneId(Long milestoneId);
 }

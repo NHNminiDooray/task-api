@@ -45,7 +45,6 @@ public class CommentRestController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{commentId}")
     public void deleteComment(@PathVariable("projectId") Long projectId,
-                              @PathVariable("taskId") Long taskId,
                               @PathVariable("commentId") Long commentId) {
         if (!this.projectService.isExist(projectId)) {
             throw new NotFoundProjectException();
