@@ -1,5 +1,19 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MilestoneRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
@@ -10,6 +24,9 @@ import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectExcep
 import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskMilestoneRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +34,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -58,16 +64,18 @@ class MilestoneRestControllerTest {
 
     @Test
     void getMilestonesSuccessTest() throws Exception {
-        given(this.milestoneRepository.findAllByProject_ProjectId(1L)).willReturn(List.of(milestone));
+        given(this.milestoneRepository.findAllByProjectProjectId(1L)).willReturn(List.of(milestone));
 
-        mockMvc.perform(get("/projects/1/milestones"))
+        MvcResult result = mockMvc.perform(get("/projects/1/milestones"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType("application/json"))
                 .andExpectAll(
                         jsonPath("$[0].milestoneId").value(milestone.getMilestoneId()),
                         jsonPath("$[0].projectId").value(milestone.getProject().getProjectId()),
-                        jsonPath("$[0].name").value(milestone.getMilestoneName()));
+                        jsonPath("$[0].name").value(milestone.getMilestoneName()))
+                .andReturn();
+        assertNotNull(result.getResponse());
 
     }
 
@@ -91,7 +99,7 @@ class MilestoneRestControllerTest {
         given(this.milestoneRepository.save(any(Milestone.class))).willReturn(milestone);
         given(this.projectRepository.findById(anyLong())).willReturn(Optional.of(project));
 
-        mockMvc.perform(post("/projects/1/milestones")
+        MvcResult result = mockMvc.perform(post("/projects/1/milestones")
                         .content(objectMapper.writeValueAsString(milestone))
                         .contentType("application/json"))
                 .andExpectAll(
@@ -100,7 +108,8 @@ class MilestoneRestControllerTest {
                 .andExpectAll(
                         jsonPath("$.milestoneId").value(milestone.getMilestoneId()),
                         jsonPath("$.projectId").value(milestone.getProject().getProjectId()),
-                        jsonPath("$.name").value(milestone.getMilestoneName()));
+                        jsonPath("$.name").value(milestone.getMilestoneName())).andReturn();
+        assertNotNull(result.getResponse());
     }
 
     @Test
@@ -125,7 +134,7 @@ class MilestoneRestControllerTest {
         given(this.milestoneRepository.findById(anyLong())).willReturn(Optional.of(milestone));
         given(this.milestoneRepository.save(any(Milestone.class))).willReturn(milestone);
 
-        mockMvc.perform(put("/projects/1/milestones/1")
+        MvcResult result =  mockMvc.perform(put("/projects/1/milestones/1")
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType("application/json"))
                 .andExpectAll(
@@ -134,7 +143,8 @@ class MilestoneRestControllerTest {
                 .andExpectAll(
                         jsonPath("$.milestoneId").value(milestone.getMilestoneId()),
                         jsonPath("$.projectId").value(milestone.getProject().getProjectId()),
-                        jsonPath("$.name").value(requestDto.getMilestoneName()));
+                        jsonPath("$.name").value(requestDto.getMilestoneName())).andReturn();
+        assertNotNull(result.getResponse());
     }
 
     @Test
@@ -163,8 +173,8 @@ class MilestoneRestControllerTest {
         given(this.projectRepository.existsById(anyLong())).willReturn(true);
         given(this.milestoneRepository.existsById(anyLong())).willReturn(true);
 
-        given(this.taskMilestoneRepository.findAllTaskMilestonesByMilestone_MilestoneId(anyLong())).willReturn(List.of());
-        given(this.milestoneRepository.findAllByProject_ProjectId(anyLong())).willReturn(List.of(milestone));
+        given(this.taskMilestoneRepository.findAllTaskMilestonesByMilestoneMilestoneId(anyLong())).willReturn(List.of());
+        given(this.milestoneRepository.findAllByProjectProjectId(anyLong())).willReturn(List.of(milestone));
 
         assertDoesNotThrow(() -> mockMvc.perform(delete("/projects/1/milestones/1")));
     }

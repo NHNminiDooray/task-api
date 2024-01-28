@@ -26,14 +26,14 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public MileStoneResponseDto getMilestoneResponseDtoByTaskId( Long taskId) {
-        List<TaskMilestone> taskMilestone = taskMilestoneRepository.findAllByPk_TaskId(taskId);
+        List<TaskMilestone> taskMilestone = taskMilestoneRepository.findAllByPkTaskId(taskId);
         return new MileStoneResponseDto(taskMilestone.get(0).getMilestone().getStartPeriod(),
                 taskMilestone.get(0).getMilestone().getEndPeriod());
     }
 
     public TaskMilestoneDomainDto createTaskMilestone(Long projectId, Long taskId, Long milestoneId) {
         if (!projectRepository.existsById(projectId)) {
-            throw new NotFoundProjectException("존재하지 않는 프로젝트입니다.");
+            throw new NotFoundProjectException();
         }
 
         Task task = taskRepository.findById(taskId)
@@ -47,7 +47,7 @@ public class TaskMilestoneServiceImpl implements TaskMilestoneService {
 
     public void deleteTaskMilestone(Long projectId, Long taskId, Long milestoneId) {
         if (!projectRepository.existsById(projectId)) {
-            throw new NotFoundProjectException("존재하지 않는 프로젝트입니다.");
+            throw new NotFoundProjectException();
         }
 
         TaskMilestone.Pk pk = taskMilestoneRepository.findById(new TaskMilestone.Pk(taskId, milestoneId))

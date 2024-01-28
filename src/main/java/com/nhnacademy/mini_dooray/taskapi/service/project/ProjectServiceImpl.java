@@ -54,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(Long projectId) {
         return this.projectRepository.findById(projectId)
-                .orElseThrow(() -> new NotFoundProjectException("프로젝트가 존재하지 않습니다."));
+                .orElseThrow(NotFoundProjectException::new);
     }
 
     @Override

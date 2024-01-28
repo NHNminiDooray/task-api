@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long commentId) {
         if (!this.commentRepository.existsById(commentId)) {
-            throw new NotFoundTaskException("댓글이 존재하지 않습니다.");
+            throw new NotFoundCommentException("댓글이 존재하지 않습니다.");
         }
 
         this.commentRepository.deleteById(commentId);
@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> getCommentsByTaskId(Long taskId) {
-        List<Comment> comments = commentRepository.findAllByTask_TaskId(taskId);
+        List<Comment> comments = commentRepository.findAllByTaskTaskId(taskId);
         return comments.stream()
                 .map(comment -> new CommentResponseDto(comment.getCommentId(),
                         comment.getCommentWriterMemberId(),

@@ -12,10 +12,11 @@ import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
 import com.nhnacademy.mini_dooray.taskapi.service.comment.CommentService;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
-import com.nhnacademy.mini_dooray.taskapi.service.taskTag.TaskTagService;
+import com.nhnacademy.mini_dooray.taskapi.service.tasktag.TaskTagService;
 import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
             return new TaskResponseDto(projectId, taskRequest.getTaskTitle(), taskRequest.getTaskContent(),
                     taskRequest.getTaskWriteMemberId());
         }else{
-            throw new NotFoundTaskException("Task를 찾을 수 없습니다");
+            throw new NotFoundTaskException();
         }
 
     }
@@ -62,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
         if (checkProjectId(projectId, taskId)) {
             taskRepository.deleteById(taskId);
         }else{
-            throw new NotFoundTaskException("Task를 찾을 수 없습니다");
+            throw new NotFoundTaskException();
         }
     }
     @Override
@@ -80,9 +81,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDetailResponseDto getTaskByProjectIdAndTaskId(Long projectId, Long taskId) {
-        Task task = taskRepository.findByProject_ProjectIdAndTaskId(projectId, taskId);
+        Task task = taskRepository.findByProjectProjectIdAndTaskId(projectId, taskId);
         if (Objects.isNull(task)) {
-            throw new NotFoundTaskException("Task를 찾을 수 없습니다");
+            throw new NotFoundTaskException();
         }
 
         return new TaskDetailResponseDto(task.getTaskId(), task.getTaskTitle(),
@@ -99,7 +100,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkProjectId(Long projectId, Long taskId) {
-        Task task = taskRepository.getById(taskId);
-        return task.getProject().getProjectId().equals(projectId);
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            return task.getProject().getProjectId().equals(projectId);
+        }
+        return false;
     }
 }

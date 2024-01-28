@@ -5,7 +5,6 @@ import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project.ProjectRegisterResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;
-import com.nhnacademy.mini_dooray.taskapi.entity.ProjectMember;
 
 import java.util.List;
 

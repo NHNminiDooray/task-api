@@ -2,6 +2,7 @@ package com.nhnacademy.mini_dooray.taskapi.controller;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.exception.tag.NotFoundTagException;
 import com.nhnacademy.mini_dooray.taskapi.service.tag.TagService;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +30,7 @@ public class TagController {
     @PostMapping
     public TagResponseDto createTag(@PathVariable("projectId") Long projectId, @RequestBody TagRequestDto tagRequest) {
         if (Objects.isNull(tagRequest)) {
-            throw new RuntimeException("Task 정보가 없습니다.");
+            throw new NotFoundTagException("Task 정보가 없습니다.");
         }
         return tagService.saveTag(projectId, tagRequest);
     }

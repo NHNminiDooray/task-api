@@ -1,4 +1,4 @@
-package com.nhnacademy.mini_dooray.taskapi.service.projectMember;
+package com.nhnacademy.mini_dooray.taskapi.service.projectmember;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.project_member.ProjectMemberRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Project;

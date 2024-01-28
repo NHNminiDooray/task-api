@@ -23,7 +23,7 @@ public class CommentRestController {
                                                   @PathVariable("taskId") Long taskId,
                                                   @RequestBody CommentRegisterRequestDto requestDto) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException();
         }
 
         return this.commentService.saveComment(taskId, requestDto);
@@ -36,7 +36,7 @@ public class CommentRestController {
                                  @PathVariable("commentId") Long commentId,
                                  @RequestBody CommentModifyRequestDto requestDto) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException();
         }
 
         return this.commentService.updateComment(taskId, commentId, requestDto);
@@ -48,7 +48,7 @@ public class CommentRestController {
                               @PathVariable("taskId") Long taskId,
                               @PathVariable("commentId") Long commentId) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException();
         }
 
         this.commentService.deleteComment(commentId);

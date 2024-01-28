@@ -4,14 +4,14 @@ import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskDetailResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskIndexListResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task.TaskResponseDto;
-import com.nhnacademy.mini_dooray.taskapi.dto.taskTag.TaskTagResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.tasktag.TaskTagResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.task_milestone.TaskMilestoneDomainDto;
+import com.nhnacademy.mini_dooray.taskapi.exception.tag.NotFoundTagException;
 import com.nhnacademy.mini_dooray.taskapi.service.task.TaskService;
-import com.nhnacademy.mini_dooray.taskapi.service.taskTag.TaskTagService;
+import com.nhnacademy.mini_dooray.taskapi.service.tasktag.TaskTagService;
+import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import java.util.List;
 import java.util.Objects;
-
-import com.nhnacademy.mini_dooray.taskapi.service.task_milestone.TaskMilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +43,7 @@ public class TaskRestController {
     @PostMapping
     public TaskResponseDto createTask(@PathVariable("projectId") Long projectId, @RequestBody TaskRequestDto taskRequest) {
         if (Objects.isNull(taskRequest)) {
-            throw new RuntimeException("Task 정보가 없습니다.");
+            throw new NotFoundTagException("Task 정보가 없습니다.");
         }
         return taskService.saveTask(projectId, taskRequest);
     }

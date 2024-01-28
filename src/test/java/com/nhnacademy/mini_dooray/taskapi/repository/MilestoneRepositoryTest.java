@@ -42,7 +42,7 @@ class MilestoneRepositoryTest {
         testEntityManager.flush();
 
         List<Milestone> allByProjectProjectId = this.milestoneRepository
-                .findAllByProject_ProjectId(project.getProjectId());
+                .findAllByProjectProjectId(project.getProjectId());
 
         assertEquals(1L, allByProjectProjectId.size());
         assertEquals(milestone.getMilestoneId(), allByProjectProjectId.get(0).getMilestoneId());

@@ -27,7 +27,7 @@ public class MilestoneServiceImpl implements MilestoneService {
     }
 
     public List<MileStoneDomainResponseDto> getMilestonesByProjectId(Long projectId) {
-        List<Milestone> milestones = this.milestoneRepository.findAllByProject_ProjectId(projectId);
+        List<Milestone> milestones = this.milestoneRepository.findAllByProjectProjectId(projectId);
         return milestones.stream().map(milestone -> new MileStoneDomainResponseDto(
                         milestone.getMilestoneId(), milestone.getProject().getProjectId(),
                         milestone.getMilestoneName(), milestone.getStartPeriod(), milestone.getEndPeriod()))
@@ -59,9 +59,9 @@ public class MilestoneServiceImpl implements MilestoneService {
     }
 
     public void deleteMilestone(Long projectId, Long milestoneId) {
-        List<TaskMilestone> taskMilestones = this.taskMilestoneRepository.findAllTaskMilestonesByMilestone_MilestoneId(milestoneId);
+        List<TaskMilestone> taskMilestones = this.taskMilestoneRepository.findAllTaskMilestonesByMilestoneMilestoneId(milestoneId);
 
-        this.milestoneRepository.findAllByProject_ProjectId(projectId).forEach(milestone -> {
+        this.milestoneRepository.findAllByProjectProjectId(projectId).forEach(milestone -> {
             for (TaskMilestone taskMilestone : taskMilestones) {
                 if (milestone.getMilestoneId().equals(taskMilestone.getMilestone().getMilestoneId())) {
                     throw new MilestoneAccessDenyException("마일스톤에 연결된 태스크가 있습니다.");
@@ -74,7 +74,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 
     @Override
     public List<MileStoneIndexListResponseDto> getMileStonesListByProjectId(Long projectId) {
-        List<Milestone> milestones = milestoneRepository.findAllByProject_ProjectId(projectId);
+        List<Milestone> milestones = milestoneRepository.findAllByProjectProjectId(projectId);
         return milestones.stream()
                 .map(milestone -> new MileStoneIndexListResponseDto(milestone.getMilestoneId(), milestone.getMilestoneName(),milestone.getStartPeriod(),
                         milestone.getEndPeriod()))
