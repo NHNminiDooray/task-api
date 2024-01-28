@@ -2,19 +2,16 @@ package com.nhnacademy.mini_dooray.taskapi.service.milestone;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneIndexListResponseDto;
-import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MilestoneRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Milestone;
 import com.nhnacademy.mini_dooray.taskapi.entity.TaskMilestone;
 import com.nhnacademy.mini_dooray.taskapi.exception.milestone.MilestoneAccessDenyException;
 import com.nhnacademy.mini_dooray.taskapi.exception.milestone.NotFoundMilestoneException;
 import com.nhnacademy.mini_dooray.taskapi.repository.MilestoneRepository;
-
+import com.nhnacademy.mini_dooray.taskapi.repository.TaskMilestoneRepository;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import com.nhnacademy.mini_dooray.taskapi.repository.TaskMilestoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -73,11 +70,6 @@ public class MilestoneServiceImpl implements MilestoneService {
         });
 
         this.milestoneRepository.deleteById(milestoneId);
-    }
-
-    @Override
-    public MileStoneResponseDto getMilestoneByTaskId(Long taskId) {
-        return new MileStoneResponseDto();
     }
 
     @Override
