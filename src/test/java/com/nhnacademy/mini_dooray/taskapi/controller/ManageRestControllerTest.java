@@ -45,11 +45,11 @@ class ManageRestControllerTest {
     void testGetManages() throws Exception {
         Long projectId = 1L;
         Project project = new Project(projectId, null, "project1");
-        given(tagRepository.findAllByProject_ProjectId(projectId)).willReturn(List.of(
+        given(tagRepository.findAllByProjectProjectId(projectId)).willReturn(List.of(
                 new Tag(1L, project, "tag1"),
                 new Tag(2L, project, "tag2")
         ));
-        given(milestoneRepository.findAllByProject_ProjectId(projectId)).willReturn(List.of(
+        given(milestoneRepository.findAllByProjectProjectId(projectId)).willReturn(List.of(
                 new Milestone(1L, project, "milestone1", LocalDateTime.parse("2016-01-01T12:34:56"),
                         LocalDateTime.parse("2016-01-01T12:34:57")),
                 new Milestone(2L, project, "milestone2", LocalDateTime.parse("2016-01-01T12:34:58"),
@@ -86,8 +86,8 @@ class ManageRestControllerTest {
         TaskTag taskTag1 = new TaskTag(new TaskTag.Pk(taskId, 1L), tag1, task);
         TaskTag taskTag2 = new TaskTag(new TaskTag.Pk(taskId, 2L), tag2, task);
 
-        given(tagRepository.findAllByProject_ProjectId(projectId)).willReturn(List.of(tag1, tag2));
-        given(taskTagRepository.findAllByPk_TaskId(taskId)).willReturn(List.of(taskTag1, taskTag2));
+        given(tagRepository.findAllByProjectProjectId(projectId)).willReturn(List.of(tag1, tag2));
+        given(taskTagRepository.findAllByPkTaskId(taskId)).willReturn(List.of(taskTag1, taskTag2));
 
         mockMvc.perform(get("/projects/{projectId}/tasks/{taskId}/manage", projectId, taskId))
                 .andExpect(status().isOk())

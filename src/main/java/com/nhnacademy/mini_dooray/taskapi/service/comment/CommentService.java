@@ -4,7 +4,6 @@ import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentRegisterRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentResponseDto;
-import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import java.util.List;
 
 public interface CommentService {

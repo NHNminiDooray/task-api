@@ -8,12 +8,18 @@ import com.nhnacademy.mini_dooray.taskapi.exception.milestone.NotFoundMilestoneE
 import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectException;
 import com.nhnacademy.mini_dooray.taskapi.service.milestone.MilestoneService;
 import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Objects;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/projects/{projectId}/milestones")
@@ -32,16 +38,16 @@ public class MilestoneRestController {
     @PostMapping
     public MileStoneDomainResponseDto createMilestone(@PathVariable("projectId") Long projectId,
                                      @RequestBody MilestoneRequestDto milestoneRequest) {
-        if (Objects.isNull(milestoneRequest)) {
-            throw new NotFoundMilestoneException("마일스톤 정보가 없습니다.");
+        try {
+            Project project = this.projectService.getProject(projectId);
+
+            return this.milestoneService.saveMilestone(new Milestone(
+                    null, // Auto Increment
+                    project, milestoneRequest.getMilestoneName(),
+                    milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
+        } catch (NullPointerException e) {
+            throw new NotFoundMilestoneException("마일스톤 등록에 필요한 정보들이 부족합니다.");
         }
-
-        Project project = this.projectService.getProject(projectId);
-
-        return this.milestoneService.saveMilestone(new Milestone(
-                null, // Auto Increment
-                project, milestoneRequest.getMilestoneName(),
-                milestoneRequest.getStartPeriod(), milestoneRequest.getEndPeriod()));
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -50,7 +56,7 @@ public class MilestoneRestController {
                                      @PathVariable("milestoneId") Long milestoneId,
                                      @RequestBody MilestoneRequestDto milestoneRequest) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundProjectException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException();
         }
 
         return this.milestoneService.updateMilestone(milestoneRequest, milestoneId);
@@ -61,10 +67,10 @@ public class MilestoneRestController {
     public void deleteMilestone(@PathVariable("projectId") Long projectId,
                                 @PathVariable("milestoneId") Long milestoneId) {
         if (!this.projectService.isExist(projectId)) {
-            throw new NotFoundMilestoneException("프로젝트가 존재하지 않습니다.");
+            throw new NotFoundProjectException();
         }
         if (!this.milestoneService.isExist(milestoneId)) {
-            throw new NotFoundMilestoneException("마일스톤이 존재하지 않습니다.");
+            throw new NotFoundMilestoneException();
         }
 
         this.milestoneService.deleteMilestone(projectId, milestoneId);

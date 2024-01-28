@@ -30,22 +30,22 @@ class MilestoneRepositoryTest {
     @BeforeEach
     void setUp() {
         project = new Project();
-        project.setProjectId(1L);
+        project.setProjectName("project name");
         this.milestone = new Milestone(
-                1L, project, "name", LocalDateTime.now(), LocalDateTime.now());
+                null, project, "name", LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test
     void findAllByProject_ProjectId() {
-        this.testEntityManager.merge(project);
-        this.testEntityManager.merge(milestone);
+        this.testEntityManager.persist(project);
+        this.testEntityManager.persist(milestone);
+        testEntityManager.flush();
 
-        List<Milestone> allByProjectProjectId = this.milestoneRepository.findAllByProject_ProjectId(1L);
+        List<Milestone> allByProjectProjectId = this.milestoneRepository
+                .findAllByProjectProjectId(project.getProjectId());
 
-        assertEquals(1, allByProjectProjectId.size());
+        assertEquals(1L, allByProjectProjectId.size());
         assertEquals(milestone.getMilestoneId(), allByProjectProjectId.get(0).getMilestoneId());
         assertEquals(milestone.getMilestoneName(), allByProjectProjectId.get(0).getMilestoneName());
-        assertEquals(milestone.getProject().getProjectId(),
-                allByProjectProjectId.get(0).getProject().getProjectId());
     }
 }

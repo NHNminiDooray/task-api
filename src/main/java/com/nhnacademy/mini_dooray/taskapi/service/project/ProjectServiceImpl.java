@@ -54,12 +54,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(Long projectId) {
         return this.projectRepository.findById(projectId)
-                .orElseThrow(() -> new NotFoundProjectException("프로젝트가 존재하지 않습니다."));
+                .orElseThrow(NotFoundProjectException::new);
     }
 
     @Override
     public List<ProjectIndexListResponseDto> getProjectIndexListsByMemberId(String projectMemberId) {
-//        return this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
         List<ProjectIndexListInterfaceResponseDto> projectsIndexListByMemberId = this.projectRepository.findProjectsIndexListByMemberId(projectMemberId);
         return projectsIndexListByMemberId.stream().map(project ->
                         new ProjectIndexListResponseDto(project.getProjectId(), project.getProjectName()))

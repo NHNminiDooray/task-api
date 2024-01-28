@@ -6,12 +6,8 @@ import com.nhnacademy.mini_dooray.taskapi.dto.milestone.MileStoneResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
 import java.util.List;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@NoArgsConstructor
 public class TaskDetailResponseDto {
     private Long taskId;
     private String taskTitle;

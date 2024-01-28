@@ -1,7 +1,7 @@
-package com.nhnacademy.mini_dooray.taskapi.service.taskTag;
+package com.nhnacademy.mini_dooray.taskapi.service.tasktag;
 
 import com.nhnacademy.mini_dooray.taskapi.dto.tag.TagResponseDto;
-import com.nhnacademy.mini_dooray.taskapi.dto.taskTag.TaskTagResponseDto;
+import com.nhnacademy.mini_dooray.taskapi.dto.tasktag.TaskTagResponseDto;
 import java.util.List;
 
 public interface TaskTagService {

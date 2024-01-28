@@ -1,8 +1,18 @@
 package com.nhnacademy.mini_dooray.taskapi.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentDomainResponseDto;
 import com.nhnacademy.mini_dooray.taskapi.dto.comment.CommentModifyRequestDto;
 import com.nhnacademy.mini_dooray.taskapi.entity.Comment;
 import com.nhnacademy.mini_dooray.taskapi.entity.Task;
@@ -11,7 +21,8 @@ import com.nhnacademy.mini_dooray.taskapi.exception.project.NotFoundProjectExcep
 import com.nhnacademy.mini_dooray.taskapi.repository.CommentRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.ProjectRepository;
 import com.nhnacademy.mini_dooray.taskapi.repository.TaskRepository;
-import com.nhnacademy.mini_dooray.taskapi.service.project.ProjectService;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +31,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -75,7 +77,7 @@ class CommentRestControllerTest {
         given(commentRepository.save(any(Comment.class))).willReturn(comment);
         given(projectRepository.existsById(anyLong())).willReturn(true);
 
-        this.mockMvc.perform(post("/projects/1/tasks/1/comments")
+        MvcResult result = this.mockMvc.perform(post("/projects/1/tasks/1/comments")
                         .content(objectMapper.writeValueAsString(comment))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpectAll(
@@ -85,7 +87,10 @@ class CommentRestControllerTest {
                         jsonPath("$.commentId").value(comment.getCommentId()),
                         jsonPath("$.taskId").value(comment.getTask().getTaskId()),
                         jsonPath("$.commentWriterMemberId").value(comment.getCommentWriterMemberId()),
-                        jsonPath("$.commentContent").value(comment.getCommentContent()));
+                        jsonPath("$.commentContent").value(comment.getCommentContent()))
+                .andReturn();
+        assertNotNull(result.getResponse());
+
     }
 
     @Test
@@ -108,7 +113,7 @@ class CommentRestControllerTest {
         given(this.commentRepository.findById(anyLong())).willReturn(Optional.of(comment));
         given(this.commentRepository.save(any(Comment.class))).willReturn(comment);
 
-        mockMvc.perform(put("/projects/1/tasks/1/comments/1")
+        MvcResult result = mockMvc.perform(put("/projects/1/tasks/1/comments/1")
                         .content(objectMapper.writeValueAsString(new CommentModifyRequestDto(LocalDateTime.now(),
                                 comment.getCommentWriterMemberId(), comment.getCommentContent())))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -120,7 +125,8 @@ class CommentRestControllerTest {
                         jsonPath("$.taskId").value(comment.getTask().getTaskId()),
                         jsonPath("$.commentWriterMemberId").value(comment.getCommentWriterMemberId()),
                         jsonPath("$.commentContent").value(comment.getCommentContent())
-                );
+                ).andReturn();
+        assertNotNull(result.getResponse());
     }
 
     @Test
